@@ -1,0 +1,8 @@
+## DATATYPES ##
+motor	KEYWORD1
+ultrasonic	KEYWORD1
+MOREbot	KEYWORD1
+## Functions ##
+forward	KEYWORD2
+backward	KEYWORD2
+stop	KEYWORD2
