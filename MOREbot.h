@@ -66,7 +66,9 @@ class MOREbot{
   public:
     MOREbot(int LM, int RM);
     MOREbot(int LM, int RM, int trig, int echo);
-	MOREbot(String name, int LM, int RM, int trig, int echo, int brx, int btx);
+	MOREbot(String name, int LM, int RM, int trig, int echo, int rx, int tx);
+	
+	void setup();
 
 	void btSetup();
 	void btControl();

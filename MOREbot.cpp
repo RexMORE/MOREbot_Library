@@ -1,6 +1,7 @@
 #include "MOREbot.h"
 #include "Arduino.h"
 #include <Adafruit_MotorShield.h>
+#include <SoftwareSerial.h>
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 
@@ -9,7 +10,10 @@ motor::motor(int MX){
 }
 
 void motor::forward(int speed){
-  if(speed < 0) backward(-speed);
+  if(speed < 0) {
+	  backward(-speed);
+	  return;
+  }
   if(speed > 100) speed = 100;
   speed = map(speed, 0, 100, 0, 255);
   M.setSpeed(speed);
@@ -17,7 +21,10 @@ void motor::forward(int speed){
 }
 
 void motor::backward(int speed){
-  if(speed < 0) forward(-speed);
+  if(speed < 0) {
+	  forward(-speed);
+	  return;
+  }
   if(speed > 100) speed = 100;
   speed = map(speed, 0, 100, 0, 255);
   M.setSpeed(speed);
@@ -84,9 +91,19 @@ void bluetooth::processData() {
 	  while(ble.available()<=0);
       speed = ble.read();
 	  while(ble.available()<=0);
-      direction = (int)ble.read();
-	  direction = map(((speed-49.0)/abs(speed-49.0))*direction, -99, 99, 0, 2*3.1415);
+      direction = (float)ble.read();
+	  
+	  if(speed-49 != 0){
+		direction = ((speed-49.0)/abs(speed-49.0))*direction;
+	  }else{
+		  direction = 0;
+	  }
+	  
+	  direction += 99.0;
+	  direction = (direction/198.0)*3.1415*2.0;
+	  
 	  speed = map(abs(speed-49), 0, 50, 0, 100);
+	  
 	  while(ble.available()<=0);
       ble.read();
     }
@@ -153,6 +170,10 @@ MOREbot::MOREbot(int LM, int RM, int trig, int echo) : _LM(LM), _RM(RM), us(trig
 
 MOREbot::MOREbot(String name, int LM, int RM, int trig, int echo, int rx, int tx) : _name(name), _LM(LM), _RM(RM), us(trig, echo), ble(name, rx, tx) {}
 
+void MOREbot::setup(){
+	AFMS.begin();
+}
+
 void MOREbot::btSetup(){
 	ble.setup();
 }
@@ -162,9 +183,13 @@ void MOREbot::btControl(){
 	bool b = ble.getModeButton();
 	if(!b){
 		int P = ble.getSpeed();
-		int D = ble.getDirection();
-		_LM.forward(P*(cos(D)-sin(D)));
-		_RM.forward(P*(-cos(D)-sin(D)));
+		float D = ble.getDirection();
+		
+		float Lpow = P*(cos(D)-sin(D));
+		float Rpow = P*(-cos(D)-sin(D));
+		
+		_LM.forward(-Lpow);
+		_RM.forward(Rpow);
 	}else{
 		bounce();
 	}
