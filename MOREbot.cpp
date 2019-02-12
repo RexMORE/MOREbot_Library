@@ -64,27 +64,31 @@ bluetooth::bluetooth(int rx, int tx) : ble(rx, tx) {
 }
 
 bluetooth::bluetooth(String name, int rx, int tx) : ble(rx, tx) {
+	_name = name;
 	ble.begin(9600);
+}
+
+void bluetooth::setup(){
 	delay(100);
-	ble.write("AT+NAME" + name + "\r\n");
+	String s = "AT+NAME" + _name + "\r\n";
+	ble.print(s);
 	delay(10);
-	ble.write("AT+RESET");
+	ble.print("AT+RESET\r\n");
+	delay(100);
 }
 
 void bluetooth::processData() {
   if (ble.available()>0){
     int i = ble.read();
-    
     if(i == 251){
 	  while(ble.available()<=0);
       speed = ble.read();
 	  while(ble.available()<=0);
-      direction = ble.read();
-	  direction = map(((speed-49)/abs(speed-49))*direction, -99, 99, 0, 2*pi);
+      direction = (int)ble.read();
+	  direction = map(((speed-49.0)/abs(speed-49.0))*direction, -99, 99, 0, 2*3.1415);
 	  speed = map(abs(speed-49), 0, 50, 0, 100);
 	  while(ble.available()<=0);
       ble.read();
-      return();
     }
 	else if(i == 252){
 	  while(ble.available()<=0);
@@ -92,7 +96,6 @@ void bluetooth::processData() {
 	  while(ble.available()<=0);
       ble.read();
 	  if(button == modeButton) mode = !mode;
-      return();
     }
 	else if(i == 253){
 	  while(ble.available()<=0);
@@ -101,7 +104,6 @@ void bluetooth::processData() {
       sliderValue = ble.read();
 	  while(ble.available()<=0);
       ble.read();
-      return();
     }
 	else if(i == 254){
       String t = "";
@@ -125,7 +127,7 @@ int bluetooth::getSpeed(){
 	return speed;
 }
 
-int bluetooth::getDirection(){
+float bluetooth::getDirection(){
 	return direction;
 }
 
@@ -145,37 +147,26 @@ String bluetooth::getText(){
 	return text;
 }
 
-MOREbot::MOREbot(int LM, int RM) : _LM(LM), _RM(RM) {}
+MOREbot::MOREbot(int LM, int RM) : _LM(LM), _RM(RM), ble(8, 9) {}
 
-MOREbot::MOREbot(int LM, int RM, int trig, int echo) : _LM(LM), _RM(RM), us(trig, echo) {}
+MOREbot::MOREbot(int LM, int RM, int trig, int echo) : _LM(LM), _RM(RM), us(trig, echo), ble(8, 9) {}
 
-MOREbot::MOREbot(String name, int LM, int RM, int trig, int echo, int rx, int tx) : _name(name), _LM(LM), _RM(RM), us(trig, echo) {
-	ble = new bluetooth(name, rx, tx);
-}
+MOREbot::MOREbot(String name, int LM, int RM, int trig, int echo, int rx, int tx) : _name(name), _LM(LM), _RM(RM), us(trig, echo), ble(name, rx, tx) {}
 
-void MOREbot::connectBluetooth(int rx, int tx){
-	if(ble) delete ble;
-	ble = new bluetooth(rx, tx);
-}
-
-void MOREbot::connectBluetooth(String name, int rx, int tx){
-	if(ble) delete ble;
-	ble = new bluetooth(name, rx, tx);
+void MOREbot::btSetup(){
+	ble.setup();
 }
 
 void MOREbot::btControl(){
-	if(!ble) return;
-	else{
-		ble.processData();
-		bool b = ble.getModeButton();
-		if(!b){
-			int P = ble.getSpeed();
-			int D = ble.getDirection();
-			_LM.forward(P*(cos(D)-sin(D)));
-			_RM.forward(P*(-cos(D)-sin(D)));
-		}else{
-			bounce();
-		}
+	ble.processData();
+	bool b = ble.getModeButton();
+	if(!b){
+		int P = ble.getSpeed();
+		int D = ble.getDirection();
+		_LM.forward(P*(cos(D)-sin(D)));
+		_RM.forward(P*(-cos(D)-sin(D)));
+	}else{
+		bounce();
 	}
 }
 

@@ -4,6 +4,7 @@
 #include "Arduino.h"
 #include "Wire.h"
 #include <Adafruit_MotorShield.h>
+#include <SoftwareSerial.h>
 
 class motor{
   private:
@@ -32,21 +33,22 @@ class bluetooth{
   private:
     int _rx;
     int _tx;
-	int speed, direction, button, slider, sliderValue;
+	int speed, button, slider, sliderValue;
+	float direction;
 	int modeButton = 2;
-	String text;
+	String _name, text;
 	bool mode = false;
-	MOREbot _robot;
 	SoftwareSerial ble;
 	
   public:
     bluetooth(int rx, int tx);
     bluetooth(String name, int rx, int tx);
 	
+	void setup();
 	void processData();
 	bool getModeButton();
 	int getSpeed();
-	int getDirection();
+	float getDirection();
 	int getButton();
 	int getSlider();
 	int getSliderValue();
@@ -65,9 +67,8 @@ class MOREbot{
     MOREbot(int LM, int RM);
     MOREbot(int LM, int RM, int trig, int echo);
 	MOREbot(String name, int LM, int RM, int trig, int echo, int brx, int btx);
-	
-	void connectBluetooth(int rx, int tx);
-	void connectBluetooth(String name, int rx, int tx);
+
+	void btSetup();
 	void btControl();
 	
     void forward(int speed);

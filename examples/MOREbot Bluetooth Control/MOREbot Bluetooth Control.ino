@@ -12,10 +12,10 @@
 MOREbot bot(btname, LM, RM, trig, echo, rx, tx);
 
 void setup() {
+  bot.btSetup();
   Serial.begin(9600);
 }
 
 void loop() {
   bot.btControl();
 }
-
