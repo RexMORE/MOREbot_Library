@@ -1,8 +1,47 @@
-## DATATYPES ##
-motor	KEYWORD1
-ultrasonic	KEYWORD1
-MOREbot	KEYWORD1
-## Functions ##
-forward	KEYWORD2
-backward	KEYWORD2
-stop	KEYWORD2
+
+## Syntax Coloring Map 		##
+
+## DATATYPES 	KEYWORD1 	##
+
+## OBJECTS 		KEYWORD1  	##
+
+motor			KEYWORD1
+ultrasonic		KEYWORD1
+bluetooth 		KEYWORD1
+MOREbot			KEYWORD1
+
+## FUNCTIONS 	KEYWORD2  	##
+
+# Motor Functions
+
+forward			KEYWORD2
+backward		KEYWORD2
+stop			KEYWORD2
+
+# Ultrasonic Functions
+
+readDistance	KEYWORD2
+
+# Bluetooth Functions
+
+processData		KEYWORD2
+getSpeed		KEYWORD2
+getDirection	KEYWORD2
+getButton		KEYWORD2
+getSlider		KEYWORD2
+getSliderValue	KEYWORD2
+getText			KEYWORD2
+getModeButton	KEYWORD2
+
+# MOREbot Functions
+
+getLeftMotor	KEYWORD2
+getRightMotor	KEYWORD2
+getUltrasonic	KEYWORD2
+getBluetooth	KEYWORD2
+
+## INSTANCES 	KEYWORD2  	##
+
+## CONSTANTS 	LITERAL1  	##
+
+## RESERVED 	LITERAL2	##

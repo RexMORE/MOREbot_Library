@@ -43,7 +43,7 @@ ultrasonic::ultrasonic(int trig, int echo){
   _echo = echo;
 }
 
-float ultrasonic::getDistance(){
+float ultrasonic::readDistance(){
   float distance[5];
   int duration = 0;
   for(int i = 0; i < 5; i++){
@@ -172,27 +172,23 @@ MOREbot::MOREbot(String name, int LM, int RM, int trig, int echo, int rx, int tx
 
 void MOREbot::setup(){
 	AFMS.begin();
-}
-
-void MOREbot::btSetup(){
 	ble.setup();
 }
 
-void MOREbot::btControl(){
-	ble.processData();
-	bool b = ble.getModeButton();
-	if(!b){
-		int P = ble.getSpeed();
-		float D = ble.getDirection();
-		
-		float Lpow = P*(cos(D)-sin(D));
-		float Rpow = P*(-cos(D)-sin(D));
-		
-		_LM.forward(-Lpow);
-		_RM.forward(Rpow);
-	}else{
-		bounce();
-	}
+motor MOREbot::getLeftMotor(){
+	return _LM;
+}
+
+motor MOREbot::getRightMotor(){
+	return _RM;
+}
+
+ultrasonic MOREbot::getUltrasonic(){
+	return us;
+}
+
+bluetooth MOREbot::getBluetooth(){
+	return ble;
 }
 
 void MOREbot::forward(int speed){
@@ -220,8 +216,25 @@ void MOREbot::stop(){
   _RM.stop();
 }
 
-float MOREbot::getDistance(){
+float MOREbot::readDistance(){
   return us.getDistance();
+}
+
+void MOREbot::btControl(){
+	ble.processData();
+	bool b = ble.getModeButton();
+	if(!b){
+		int P = ble.getSpeed();
+		float D = ble.getDirection();
+		
+		float Lpow = P*(cos(D)-sin(D));
+		float Rpow = P*(-cos(D)-sin(D));
+		
+		_LM.forward(-Lpow);
+		_RM.forward(Rpow);
+	}else{
+		bounce();
+	}
 }
 
 void MOREbot::bounce(){

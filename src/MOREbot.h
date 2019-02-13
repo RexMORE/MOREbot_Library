@@ -19,14 +19,14 @@ class motor{
 };
 
 class ultrasonic{
-  public:
-    ultrasonic();
-    ultrasonic(int trig, int echo);
-    float getDistance();
-    
   private:
     int _trig;
     int _echo;
+
+  public:
+    ultrasonic();
+    ultrasonic(int trig, int echo);
+    float readDistance();
 };
 
 class bluetooth{
@@ -70,8 +70,10 @@ class MOREbot{
 	
 	void setup();
 
-	void btSetup();
-	void btControl();
+	motor getLeftMotor();
+	motor getRightMotor();
+	ultrasonic getUltrasonic();
+	bluetooth getBluetooth();
 	
     void forward(int speed);
     void backward(int speed);
@@ -79,8 +81,9 @@ class MOREbot{
     void right(int speed);
     void stop();
 	
-    float getDistance();
+    float readDistance();
 	
+	void btControl();
 	void bounce();
 };
 #endif
