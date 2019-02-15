@@ -3,7 +3,9 @@
 </p>
 
 
-# MOREbot_Library
+# MOREbot Library
 
 
 This library provides the functions necessary to program the MOREbot Base Kit.
+
+[DOCUMENTATION](/docs/html/index.html)

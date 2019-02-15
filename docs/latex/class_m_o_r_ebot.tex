@@ -1,0 +1,291 @@
+\hypertarget{class_m_o_r_ebot}{}\section{M\+O\+R\+Ebot Class Reference}
+\label{class_m_o_r_ebot}\index{MOREbot@{MOREbot}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_m_o_r_ebot_a1939c1344ae853e5830c61ceaa54e536}{M\+O\+R\+Ebot}} (int LM, int RM)
+\begin{DoxyCompactList}\small\item\em Two motor \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_m_o_r_ebot_aac1c702a9b4452351d82a64877c6598b}{M\+O\+R\+Ebot}} (int LM, int RM, int trig, int echo)
+\begin{DoxyCompactList}\small\item\em Two motor and ultrasonic \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_m_o_r_ebot_a46931ade34f53b3e24e5e2035e14051f}{M\+O\+R\+Ebot}} (String name, int LM, int RM, int trig, int echo, int rx, int tx)
+\begin{DoxyCompactList}\small\item\em Two motor and ultrasonic \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_m_o_r_ebot_a61fbcee98b031e74de85d9651b4e2133}{setup}} ()
+\begin{DoxyCompactList}\small\item\em Robot setup. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmotor}{motor}} \mbox{\hyperlink{class_m_o_r_ebot_aefc49a4089db0e15f57dd7f8a27ad27c}{get\+Left\+Motor}} ()
+\begin{DoxyCompactList}\small\item\em Call function for the left motor motor object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmotor}{motor}} \mbox{\hyperlink{class_m_o_r_ebot_a07d97e38e8d0f40696b4d7d64078d5af}{get\+Right\+Motor}} ()
+\begin{DoxyCompactList}\small\item\em Call function for the right motor motor object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classultrasonic}{ultrasonic}} \mbox{\hyperlink{class_m_o_r_ebot_a30c116ce328f2ee883edf580362a6e8a}{get\+Ultrasonic}} ()
+\begin{DoxyCompactList}\small\item\em Call function for the ultrasonic object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classbluetooth}{bluetooth}} \mbox{\hyperlink{class_m_o_r_ebot_a339a4d8f12504ab13e419f38ab04c864}{get\+Bluetooth}} ()
+\begin{DoxyCompactList}\small\item\em Call function for the bluetooth object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_m_o_r_ebot_ac5646dd5b3bb754375f4516520d3774a}{forward}} (int speed)
+\begin{DoxyCompactList}\small\item\em Drive function for \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} to drive forward. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_m_o_r_ebot_ac8ae09d56affec3726ecba914a105ab2}{backward}} (int speed)
+\begin{DoxyCompactList}\small\item\em Drive function for \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} to drive backward. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_m_o_r_ebot_ae1b5d9ec8043062fdfe9c9fd49dbeeba}{left}} (int speed)
+\begin{DoxyCompactList}\small\item\em Drive function for \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} to drive left. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_m_o_r_ebot_a2e6c104080d6213165668db05122ecbf}{right}} (int speed)
+\begin{DoxyCompactList}\small\item\em Drive function for \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} to drive right. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_m_o_r_ebot_a53d65a7c2e54c5639c02d6c3872bc90c}{stop}} ()
+\begin{DoxyCompactList}\small\item\em Drive function for \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} to stop. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_m_o_r_ebot_a5720fa06b9900f5b5aba574a7507e3dc}{read\+Distance}} ()
+\begin{DoxyCompactList}\small\item\em Distance sensing function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_m_o_r_ebot_a2d8d46314854b184b6808d799019c5bb}{bt\+Control}} ()
+\begin{DoxyCompactList}\small\item\em Operation function for full control from a B\+LE connection. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_m_o_r_ebot_a2a685de71254397a986edaad9b22c8ef}{bounce}} ()
+\begin{DoxyCompactList}\small\item\em Operation function for full control to maintain distance to object in front. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_m_o_r_ebot_a1939c1344ae853e5830c61ceaa54e536}\label{class_m_o_r_ebot_a1939c1344ae853e5830c61ceaa54e536}} 
+\index{MOREbot@{MOREbot}!MOREbot@{MOREbot}}
+\index{MOREbot@{MOREbot}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{MOREbot()}{MOREbot()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily M\+O\+R\+Ebot\+::\+M\+O\+R\+Ebot (\begin{DoxyParamCaption}\item[{int}]{LM,  }\item[{int}]{RM }\end{DoxyParamCaption})}
+
+
+
+Two motor \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} constructor. 
+
+Creates left and right motor objects to control the motors. 
+\begin{DoxyParams}{Parameters}
+{\em LM} & an integer. Port of the left motor. \\
+\hline
+{\em RM} & an integer. Port of the right motor. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_m_o_r_ebot_aac1c702a9b4452351d82a64877c6598b}\label{class_m_o_r_ebot_aac1c702a9b4452351d82a64877c6598b}} 
+\index{MOREbot@{MOREbot}!MOREbot@{MOREbot}}
+\index{MOREbot@{MOREbot}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{MOREbot()}{MOREbot()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily M\+O\+R\+Ebot\+::\+M\+O\+R\+Ebot (\begin{DoxyParamCaption}\item[{int}]{LM,  }\item[{int}]{RM,  }\item[{int}]{trig,  }\item[{int}]{echo }\end{DoxyParamCaption})}
+
+
+
+Two motor and ultrasonic \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} constructor. 
+
+Creates left and right motor objects to control the motors and an ultrasonic object to sense distance. 
+\begin{DoxyParams}{Parameters}
+{\em LM} & an integer. Port of the left motor. \\
+\hline
+{\em RM} & an integer. Port of the right motor. \\
+\hline
+{\em trig} & an integer. The pin on the arduino that the ultrasonic\textquotesingle{}s trig pin is connected to. \\
+\hline
+{\em echo} & an integer. The pin on the arduino that the ultrasonic\textquotesingle{}s echo pin is connected to. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_m_o_r_ebot_a46931ade34f53b3e24e5e2035e14051f}\label{class_m_o_r_ebot_a46931ade34f53b3e24e5e2035e14051f}} 
+\index{MOREbot@{MOREbot}!MOREbot@{MOREbot}}
+\index{MOREbot@{MOREbot}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{MOREbot()}{MOREbot()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily M\+O\+R\+Ebot\+::\+M\+O\+R\+Ebot (\begin{DoxyParamCaption}\item[{String}]{name,  }\item[{int}]{LM,  }\item[{int}]{RM,  }\item[{int}]{trig,  }\item[{int}]{echo,  }\item[{int}]{rx,  }\item[{int}]{tx }\end{DoxyParamCaption})}
+
+
+
+Two motor and ultrasonic \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} constructor. 
+
+Creates left and right motor objects to control the motors and an ultrasonic object to sense distance. 
+\begin{DoxyParams}{Parameters}
+{\em name} & a String. The name that the arduino will attempt to rename the B\+LE before starting data communication (Does not rename if the module is already connected) \\
+\hline
+{\em LM} & an integer. Port of the left motor. \\
+\hline
+{\em RM} & an integer. Port of the right motor. \\
+\hline
+{\em trig} & an integer. The pin on the arduino that the ultrasonic\textquotesingle{}s trig pin is connected to. \\
+\hline
+{\em echo} & an integer. The pin on the arduino that the ultrasonic\textquotesingle{}s echo pin is connected to. \\
+\hline
+{\em rx} & an integer. Read pin for the arduino, connects to tx on the B\+LE module. \\
+\hline
+{\em tx} & an integer. Send pin for the arduino, connects to rx on the B\+LE. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_m_o_r_ebot_ac8ae09d56affec3726ecba914a105ab2}\label{class_m_o_r_ebot_ac8ae09d56affec3726ecba914a105ab2}} 
+\index{MOREbot@{MOREbot}!backward@{backward}}
+\index{backward@{backward}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{backward()}{backward()}}
+{\footnotesize\ttfamily void M\+O\+R\+Ebot\+::backward (\begin{DoxyParamCaption}\item[{int}]{speed }\end{DoxyParamCaption})}
+
+
+
+Drive function for \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} to drive backward. 
+
+Commands the left motor counterclockwise and the right motor clockwise at the given speed. 
+\begin{DoxyParams}{Parameters}
+{\em speed} & an integer, constrained between -\/100 and 100. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_m_o_r_ebot_a2a685de71254397a986edaad9b22c8ef}\label{class_m_o_r_ebot_a2a685de71254397a986edaad9b22c8ef}} 
+\index{MOREbot@{MOREbot}!bounce@{bounce}}
+\index{bounce@{bounce}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{bounce()}{bounce()}}
+{\footnotesize\ttfamily void M\+O\+R\+Ebot\+::bounce (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Operation function for full control to maintain distance to object in front. 
+
+Handles full control of the robot through the ultrasonic\textquotesingle{}s distance value, if bluetooth is connected, Arduino\+Blue button id 2 changes to \mbox{\hyperlink{class_m_o_r_ebot_a2d8d46314854b184b6808d799019c5bb}{bt\+Control()}}. \mbox{\Hypertarget{class_m_o_r_ebot_a2d8d46314854b184b6808d799019c5bb}\label{class_m_o_r_ebot_a2d8d46314854b184b6808d799019c5bb}} 
+\index{MOREbot@{MOREbot}!btControl@{btControl}}
+\index{btControl@{btControl}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{btControl()}{btControl()}}
+{\footnotesize\ttfamily void M\+O\+R\+Ebot\+::bt\+Control (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Operation function for full control from a B\+LE connection. 
+
+Handles full control of the robot through the bluetooth module expecting Arduino\+Blue joystick values, button id 2 changes to \mbox{\hyperlink{class_m_o_r_ebot_a2a685de71254397a986edaad9b22c8ef}{bounce()}}. \mbox{\Hypertarget{class_m_o_r_ebot_ac5646dd5b3bb754375f4516520d3774a}\label{class_m_o_r_ebot_ac5646dd5b3bb754375f4516520d3774a}} 
+\index{MOREbot@{MOREbot}!forward@{forward}}
+\index{forward@{forward}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{forward()}{forward()}}
+{\footnotesize\ttfamily void M\+O\+R\+Ebot\+::forward (\begin{DoxyParamCaption}\item[{int}]{speed }\end{DoxyParamCaption})}
+
+
+
+Drive function for \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} to drive forward. 
+
+Commands the left motor clockwise and the right motor counterclockwise at the given speed. 
+\begin{DoxyParams}{Parameters}
+{\em speed} & an integer, constrained between -\/100 and 100. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_m_o_r_ebot_a339a4d8f12504ab13e419f38ab04c864}\label{class_m_o_r_ebot_a339a4d8f12504ab13e419f38ab04c864}} 
+\index{MOREbot@{MOREbot}!getBluetooth@{getBluetooth}}
+\index{getBluetooth@{getBluetooth}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{getBluetooth()}{getBluetooth()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classbluetooth}{bluetooth}} M\+O\+R\+Ebot\+::get\+Bluetooth (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Call function for the bluetooth object. 
+
+\begin{DoxyReturn}{Returns}
+bluetooth object. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classbluetooth}{bluetooth}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_m_o_r_ebot_aefc49a4089db0e15f57dd7f8a27ad27c}\label{class_m_o_r_ebot_aefc49a4089db0e15f57dd7f8a27ad27c}} 
+\index{MOREbot@{MOREbot}!getLeftMotor@{getLeftMotor}}
+\index{getLeftMotor@{getLeftMotor}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{getLeftMotor()}{getLeftMotor()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmotor}{motor}} M\+O\+R\+Ebot\+::get\+Left\+Motor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Call function for the left motor motor object. 
+
+\begin{DoxyReturn}{Returns}
+motor object, the object for the left motor port on the motor shield. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classmotor}{motor}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_m_o_r_ebot_a07d97e38e8d0f40696b4d7d64078d5af}\label{class_m_o_r_ebot_a07d97e38e8d0f40696b4d7d64078d5af}} 
+\index{MOREbot@{MOREbot}!getRightMotor@{getRightMotor}}
+\index{getRightMotor@{getRightMotor}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{getRightMotor()}{getRightMotor()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmotor}{motor}} M\+O\+R\+Ebot\+::get\+Right\+Motor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Call function for the right motor motor object. 
+
+\begin{DoxyReturn}{Returns}
+motor object, the object for the right motor port on the motor shield. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classmotor}{motor}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_m_o_r_ebot_a30c116ce328f2ee883edf580362a6e8a}\label{class_m_o_r_ebot_a30c116ce328f2ee883edf580362a6e8a}} 
+\index{MOREbot@{MOREbot}!getUltrasonic@{getUltrasonic}}
+\index{getUltrasonic@{getUltrasonic}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{getUltrasonic()}{getUltrasonic()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classultrasonic}{ultrasonic}} M\+O\+R\+Ebot\+::get\+Ultrasonic (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Call function for the ultrasonic object. 
+
+\begin{DoxyReturn}{Returns}
+ultrasonic object. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classultrasonic}{ultrasonic}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_m_o_r_ebot_ae1b5d9ec8043062fdfe9c9fd49dbeeba}\label{class_m_o_r_ebot_ae1b5d9ec8043062fdfe9c9fd49dbeeba}} 
+\index{MOREbot@{MOREbot}!left@{left}}
+\index{left@{left}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{left()}{left()}}
+{\footnotesize\ttfamily void M\+O\+R\+Ebot\+::left (\begin{DoxyParamCaption}\item[{int}]{speed }\end{DoxyParamCaption})}
+
+
+
+Drive function for \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} to drive left. 
+
+Commands the both motors counterclockwise at the given speed. 
+\begin{DoxyParams}{Parameters}
+{\em speed} & an integer, constrained between -\/100 and 100. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_m_o_r_ebot_a5720fa06b9900f5b5aba574a7507e3dc}\label{class_m_o_r_ebot_a5720fa06b9900f5b5aba574a7507e3dc}} 
+\index{MOREbot@{MOREbot}!readDistance@{readDistance}}
+\index{readDistance@{readDistance}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{readDistance()}{readDistance()}}
+{\footnotesize\ttfamily float M\+O\+R\+Ebot\+::read\+Distance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Distance sensing function. 
+
+Calls ultasonic.\+read\+Distance() to get distance to the closest object in centimeters. \begin{DoxyReturn}{Returns}
+float distance to closest object in centimeters. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_m_o_r_ebot_a2e6c104080d6213165668db05122ecbf}\label{class_m_o_r_ebot_a2e6c104080d6213165668db05122ecbf}} 
+\index{MOREbot@{MOREbot}!right@{right}}
+\index{right@{right}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{right()}{right()}}
+{\footnotesize\ttfamily void M\+O\+R\+Ebot\+::right (\begin{DoxyParamCaption}\item[{int}]{speed }\end{DoxyParamCaption})}
+
+
+
+Drive function for \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} to drive right. 
+
+Commands the both motors clockwise at the given speed. 
+\begin{DoxyParams}{Parameters}
+{\em speed} & an integer, constrained between -\/100 and 100. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_m_o_r_ebot_a61fbcee98b031e74de85d9651b4e2133}\label{class_m_o_r_ebot_a61fbcee98b031e74de85d9651b4e2133}} 
+\index{MOREbot@{MOREbot}!setup@{setup}}
+\index{setup@{setup}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily void M\+O\+R\+Ebot\+::setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Robot setup. 
+
+Starts the motor shield i2c and bluetooth U\+A\+RT communication streams. \mbox{\Hypertarget{class_m_o_r_ebot_a53d65a7c2e54c5639c02d6c3872bc90c}\label{class_m_o_r_ebot_a53d65a7c2e54c5639c02d6c3872bc90c}} 
+\index{MOREbot@{MOREbot}!stop@{stop}}
+\index{stop@{stop}!MOREbot@{MOREbot}}
+\subsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void M\+O\+R\+Ebot\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Drive function for \mbox{\hyperlink{class_m_o_r_ebot}{M\+O\+R\+Ebot}} to stop. 
+
+Commands the both motors to stop. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/M\+O\+R\+Ebot.\+h\item 
+src/M\+O\+R\+Ebot.\+cpp\end{DoxyCompactItemize}

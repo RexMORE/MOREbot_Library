@@ -5,11 +5,12 @@
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 
+
 motor::motor(int MX){
   M = *AFMS.getMotor(MX);
 }
 
-void motor::forward(int speed){
+void motor::counterClockwise(int speed){
   if(speed < 0) {
 	  backward(-speed);
 	  return;
@@ -20,7 +21,7 @@ void motor::forward(int speed){
   M.run(FORWARD);
 }
 
-void motor::backward(int speed){
+void motor::clockwise(int speed){
   if(speed < 0) {
 	  forward(-speed);
 	  return;
@@ -71,7 +72,8 @@ bluetooth::bluetooth(int rx, int tx) : ble(rx, tx) {
 }
 
 bluetooth::bluetooth(String name, int rx, int tx) : ble(rx, tx) {
-	_name = name;
+	if(name.length()>0)
+	  _name = name;
 	ble.begin(9600);
 }
 
@@ -192,23 +194,23 @@ bluetooth MOREbot::getBluetooth(){
 }
 
 void MOREbot::forward(int speed){
-  _LM.forward(speed);
-  _RM.forward(speed);
+  _LM.clockwise(speed);
+  _RM.counterClockwise(speed);
 }
 
 void MOREbot::backward(int speed){
-  _LM.backward(speed);
-  _RM.backward(speed);
+  _LM.counterClockwise(speed);
+  _RM.clockwise(speed);
 }
 
 void MOREbot::left(int speed){
-  _LM.backward(speed);
-  _RM.forward(speed);
+  _LM.counterClockwise(speed);
+  _RM.counterClockwise(speed);
 }
 
 void MOREbot::right(int speed){
-  _LM.forward(speed);
-  _RM.backward(speed);
+  _LM.clockwise(speed);
+  _RM.clockwise(speed);
 }
 
 void MOREbot::stop(){

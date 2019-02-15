@@ -1,0 +1,200 @@
+\hypertarget{classbluetooth}{}\section{bluetooth Class Reference}
+\label{classbluetooth}\index{bluetooth@{bluetooth}}
+
+
+Bluetooth B\+LE class.  
+
+
+
+
+{\ttfamily \#include $<$M\+O\+R\+Ebot.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classbluetooth_a1e195afaeb92d85b4145e93fcc3ea376}{bluetooth}} (int rx, int tx)
+\begin{DoxyCompactList}\small\item\em Basic Bluetooth constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classbluetooth_a552e2e5fe456775e4cbec655a5b26911}{bluetooth}} (String name, int rx, int tx)
+\begin{DoxyCompactList}\small\item\em Bluetooth constructor eith renaming. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classbluetooth_a6859be315ee89d5130e198672fab774e}{setup}} ()
+\begin{DoxyCompactList}\small\item\em Checks that the module is responding and attempts to rename it if a name was given during construction. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classbluetooth_abd10334bfe1bfe17de207578a2297654}{process\+Data}} ()
+\begin{DoxyCompactList}\small\item\em Reads the B\+LE stream for any data that the module has recieved. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classbluetooth_a3f58d644d4b2c7a4ac07e8e0ec5c2f9d}{get\+Mode\+Button}} ()
+\begin{DoxyCompactList}\small\item\em Call function for the current mode status, inverts when the mode button id (2) is recieved. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classbluetooth_a3c726cf32623b74120736330144e69c8}{get\+Speed}} ()
+\begin{DoxyCompactList}\small\item\em Call function for sthe last speed recieved. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{classbluetooth_a49f74afe2c11e5e8a5d3e16e3c8298f5}{get\+Direction}} ()
+\begin{DoxyCompactList}\small\item\em Call function for the last direction recieved. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classbluetooth_aab4c6c9df7046908dc8ae27631241b04}{get\+Button}} ()
+\begin{DoxyCompactList}\small\item\em Call function for the last button id recieved. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classbluetooth_af74bf7e384aa7fee418ef4e644d53794}{get\+Slider}} ()
+\begin{DoxyCompactList}\small\item\em Call function for the last slider id recieved. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classbluetooth_aa888eeb5fd739339e93aa55d9a081a58}{get\+Slider\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Call function for the last slider value recieved. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{classbluetooth_a2ce571164eec6be3eb3bc7289c61f3dd}{get\+Text}} ()
+\begin{DoxyCompactList}\small\item\em Call function for the last text recieved. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Bluetooth B\+LE class. 
+
+Handles communicating with the bluetooth module, uses Arduino\+Blue data tags. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classbluetooth_a1e195afaeb92d85b4145e93fcc3ea376}\label{classbluetooth_a1e195afaeb92d85b4145e93fcc3ea376}} 
+\index{bluetooth@{bluetooth}!bluetooth@{bluetooth}}
+\index{bluetooth@{bluetooth}!bluetooth@{bluetooth}}
+\subsubsection{\texorpdfstring{bluetooth()}{bluetooth()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bluetooth\+::bluetooth (\begin{DoxyParamCaption}\item[{int}]{rx,  }\item[{int}]{tx }\end{DoxyParamCaption})}
+
+
+
+Basic Bluetooth constructor. 
+
+Sets the pins for communication with the B\+LE module and starts the stream to communicate. 
+\begin{DoxyParams}{Parameters}
+{\em rx} & an integer. Read pin for the arduino, connects to tx on the B\+LE module. \\
+\hline
+{\em tx} & an integer. Send pin for the arduino, connects to rx on the B\+LE. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classbluetooth_a552e2e5fe456775e4cbec655a5b26911}\label{classbluetooth_a552e2e5fe456775e4cbec655a5b26911}} 
+\index{bluetooth@{bluetooth}!bluetooth@{bluetooth}}
+\index{bluetooth@{bluetooth}!bluetooth@{bluetooth}}
+\subsubsection{\texorpdfstring{bluetooth()}{bluetooth()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bluetooth\+::bluetooth (\begin{DoxyParamCaption}\item[{String}]{name,  }\item[{int}]{rx,  }\item[{int}]{tx }\end{DoxyParamCaption})}
+
+
+
+Bluetooth constructor eith renaming. 
+
+Sets the pins for communication with the B\+LE module and starts the stream to communicate. Saves {\bfseries{name}} to be used when renaming the module during \mbox{\hyperlink{classbluetooth_a6859be315ee89d5130e198672fab774e}{setup()}}. 
+\begin{DoxyParams}{Parameters}
+{\em name} & a String. The name that the arduino will attempt to rename the B\+LE before starting data communication (Does not rename if the module is already connected) \\
+\hline
+{\em rx} & an integer. Read pin for the arduino, connects to tx on the B\+LE module. \\
+\hline
+{\em tx} & an integer. Send pin for the arduino, connects to rx on the B\+LE. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classbluetooth_aab4c6c9df7046908dc8ae27631241b04}\label{classbluetooth_aab4c6c9df7046908dc8ae27631241b04}} 
+\index{bluetooth@{bluetooth}!getButton@{getButton}}
+\index{getButton@{getButton}!bluetooth@{bluetooth}}
+\subsubsection{\texorpdfstring{getButton()}{getButton()}}
+{\footnotesize\ttfamily int bluetooth\+::get\+Button (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Call function for the last button id recieved. 
+
+\begin{DoxyReturn}{Returns}
+integer button id, expected between 0 and 200. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classbluetooth_a49f74afe2c11e5e8a5d3e16e3c8298f5}\label{classbluetooth_a49f74afe2c11e5e8a5d3e16e3c8298f5}} 
+\index{bluetooth@{bluetooth}!getDirection@{getDirection}}
+\index{getDirection@{getDirection}!bluetooth@{bluetooth}}
+\subsubsection{\texorpdfstring{getDirection()}{getDirection()}}
+{\footnotesize\ttfamily float bluetooth\+::get\+Direction (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Call function for the last direction recieved. 
+
+\begin{DoxyReturn}{Returns}
+float direction, between 0 and 6.\+28 ({\ttfamily 2PI}). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classbluetooth_a3f58d644d4b2c7a4ac07e8e0ec5c2f9d}\label{classbluetooth_a3f58d644d4b2c7a4ac07e8e0ec5c2f9d}} 
+\index{bluetooth@{bluetooth}!getModeButton@{getModeButton}}
+\index{getModeButton@{getModeButton}!bluetooth@{bluetooth}}
+\subsubsection{\texorpdfstring{getModeButton()}{getModeButton()}}
+{\footnotesize\ttfamily bool bluetooth\+::get\+Mode\+Button (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Call function for the current mode status, inverts when the mode button id (2) is recieved. 
+
+\begin{DoxyReturn}{Returns}
+boolean status of mode on or off. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classbluetooth_af74bf7e384aa7fee418ef4e644d53794}\label{classbluetooth_af74bf7e384aa7fee418ef4e644d53794}} 
+\index{bluetooth@{bluetooth}!getSlider@{getSlider}}
+\index{getSlider@{getSlider}!bluetooth@{bluetooth}}
+\subsubsection{\texorpdfstring{getSlider()}{getSlider()}}
+{\footnotesize\ttfamily int bluetooth\+::get\+Slider (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Call function for the last slider id recieved. 
+
+\begin{DoxyReturn}{Returns}
+integer slider id, expected between 0 and 200.. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classbluetooth_aa888eeb5fd739339e93aa55d9a081a58}\label{classbluetooth_aa888eeb5fd739339e93aa55d9a081a58}} 
+\index{bluetooth@{bluetooth}!getSliderValue@{getSliderValue}}
+\index{getSliderValue@{getSliderValue}!bluetooth@{bluetooth}}
+\subsubsection{\texorpdfstring{getSliderValue()}{getSliderValue()}}
+{\footnotesize\ttfamily int bluetooth\+::get\+Slider\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Call function for the last slider value recieved. 
+
+\begin{DoxyReturn}{Returns}
+integer slider value, expected between 0 and 200. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classbluetooth_a3c726cf32623b74120736330144e69c8}\label{classbluetooth_a3c726cf32623b74120736330144e69c8}} 
+\index{bluetooth@{bluetooth}!getSpeed@{getSpeed}}
+\index{getSpeed@{getSpeed}!bluetooth@{bluetooth}}
+\subsubsection{\texorpdfstring{getSpeed()}{getSpeed()}}
+{\footnotesize\ttfamily int bluetooth\+::get\+Speed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Call function for sthe last speed recieved. 
+
+\begin{DoxyReturn}{Returns}
+integer speed, between 0 and 100. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classbluetooth_a2ce571164eec6be3eb3bc7289c61f3dd}\label{classbluetooth_a2ce571164eec6be3eb3bc7289c61f3dd}} 
+\index{bluetooth@{bluetooth}!getText@{getText}}
+\index{getText@{getText}!bluetooth@{bluetooth}}
+\subsubsection{\texorpdfstring{getText()}{getText()}}
+{\footnotesize\ttfamily String bluetooth\+::get\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Call function for the last text recieved. 
+
+\begin{DoxyReturn}{Returns}
+String text. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classbluetooth_abd10334bfe1bfe17de207578a2297654}\label{classbluetooth_abd10334bfe1bfe17de207578a2297654}} 
+\index{bluetooth@{bluetooth}!processData@{processData}}
+\index{processData@{processData}!bluetooth@{bluetooth}}
+\subsubsection{\texorpdfstring{processData()}{processData()}}
+{\footnotesize\ttfamily void bluetooth\+::process\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Reads the B\+LE stream for any data that the module has recieved. 
+
+Saves that data in private memory. Processes joystick data into speed and direction. \mbox{\Hypertarget{classbluetooth_a6859be315ee89d5130e198672fab774e}\label{classbluetooth_a6859be315ee89d5130e198672fab774e}} 
+\index{bluetooth@{bluetooth}!setup@{setup}}
+\index{setup@{setup}!bluetooth@{bluetooth}}
+\subsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily void bluetooth\+::setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Checks that the module is responding and attempts to rename it if a name was given during construction. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/M\+O\+R\+Ebot.\+h\item 
+src/M\+O\+R\+Ebot.\+cpp\end{DoxyCompactItemize}

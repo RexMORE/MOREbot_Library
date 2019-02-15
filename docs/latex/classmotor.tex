@@ -1,0 +1,100 @@
+\hypertarget{classmotor}{}\section{motor Class Reference}
+\label{classmotor}\index{motor@{motor}}
+
+
+Motor class.  
+
+
+
+
+{\ttfamily \#include $<$M\+O\+R\+Ebot.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmotor_ae56a6d927333ea6aea189de020179dc8}{motor}} (int MX)
+\begin{DoxyCompactList}\small\item\em Motor constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmotor_a25458366e1d0097574640c68fbc618b3}{counter\+Clockwise}} (int speed)
+\begin{DoxyCompactList}\small\item\em counter\+Clockwise motor function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmotor_aa430473ab7a4844313c74f25e8ad680b}{clockwise}} (int speed)
+\begin{DoxyCompactList}\small\item\em Backward motor function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmotor_a9395e462f009a775c5fbe11f4c39150c}{stop}} ()
+\begin{DoxyCompactList}\small\item\em Stop motor function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Motor class. 
+
+Handles retrieving the motor from i2c and then sending the commands. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmotor_ae56a6d927333ea6aea189de020179dc8}\label{classmotor_ae56a6d927333ea6aea189de020179dc8}} 
+\index{motor@{motor}!motor@{motor}}
+\index{motor@{motor}!motor@{motor}}
+\subsubsection{\texorpdfstring{motor()}{motor()}}
+{\footnotesize\ttfamily motor\+::motor (\begin{DoxyParamCaption}\item[{int}]{MX }\end{DoxyParamCaption})}
+
+
+
+Motor constructor. 
+
+Retrieves the i2c address of the specified motor port on the motor shield. 
+\begin{DoxyParams}{Parameters}
+{\em MX} & integer. The motor port being accessed. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmotor_aa430473ab7a4844313c74f25e8ad680b}\label{classmotor_aa430473ab7a4844313c74f25e8ad680b}} 
+\index{motor@{motor}!clockwise@{clockwise}}
+\index{clockwise@{clockwise}!motor@{motor}}
+\subsubsection{\texorpdfstring{clockwise()}{clockwise()}}
+{\footnotesize\ttfamily void motor\+::clockwise (\begin{DoxyParamCaption}\item[{int}]{speed }\end{DoxyParamCaption})}
+
+
+
+Backward motor function. 
+
+Sets motor speed and direction (of the internal motor axle), handles negative values with \mbox{\hyperlink{classmotor_a25458366e1d0097574640c68fbc618b3}{counter\+Clockwise()}}. 
+\begin{DoxyParams}{Parameters}
+{\em speed} & an integer. The speed to be sent to the motor. Contrained from -\/100 to 100. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+forward() 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classmotor_a25458366e1d0097574640c68fbc618b3}\label{classmotor_a25458366e1d0097574640c68fbc618b3}} 
+\index{motor@{motor}!counterClockwise@{counterClockwise}}
+\index{counterClockwise@{counterClockwise}!motor@{motor}}
+\subsubsection{\texorpdfstring{counterClockwise()}{counterClockwise()}}
+{\footnotesize\ttfamily void motor\+::counter\+Clockwise (\begin{DoxyParamCaption}\item[{int}]{speed }\end{DoxyParamCaption})}
+
+
+
+counter\+Clockwise motor function. 
+
+Sets motor speed and direction (of the internal motor axle), handles negative values with \mbox{\hyperlink{classmotor_aa430473ab7a4844313c74f25e8ad680b}{clockwise()}}. 
+\begin{DoxyParams}{Parameters}
+{\em speed} & an integer. The speed to be sent to the motor. Contrained from -\/100 to 100. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+backward() 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classmotor_a9395e462f009a775c5fbe11f4c39150c}\label{classmotor_a9395e462f009a775c5fbe11f4c39150c}} 
+\index{motor@{motor}!stop@{stop}}
+\index{stop@{stop}!motor@{motor}}
+\subsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void motor\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Stop motor function. 
+
+Sets motor speed to zero, and releases the motor. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/M\+O\+R\+Ebot.\+h\item 
+src/M\+O\+R\+Ebot.\+cpp\end{DoxyCompactItemize}

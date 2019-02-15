@@ -1,0 +1,65 @@
+\hypertarget{classultrasonic}{}\section{ultrasonic Class Reference}
+\label{classultrasonic}\index{ultrasonic@{ultrasonic}}
+
+
+Ultrasonic class.  
+
+
+
+
+{\ttfamily \#include $<$M\+O\+R\+Ebot.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classultrasonic_a28f8c308f64c7a7bf1f94a89bd0ccee9}{ultrasonic}} (int trig, int echo)
+\begin{DoxyCompactList}\small\item\em Ultrasonic constructor. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{classultrasonic_aed6e493e6585def02c351e04bab3e496}{read\+Distance}} ()
+\begin{DoxyCompactList}\small\item\em Function to get distance from the Ultrasonic. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Ultrasonic class. 
+
+Handles communicating with the ultrasonic module to determine distance to the nearest object. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classultrasonic_a28f8c308f64c7a7bf1f94a89bd0ccee9}\label{classultrasonic_a28f8c308f64c7a7bf1f94a89bd0ccee9}} 
+\index{ultrasonic@{ultrasonic}!ultrasonic@{ultrasonic}}
+\index{ultrasonic@{ultrasonic}!ultrasonic@{ultrasonic}}
+\subsubsection{\texorpdfstring{ultrasonic()}{ultrasonic()}}
+{\footnotesize\ttfamily ultrasonic\+::ultrasonic (\begin{DoxyParamCaption}\item[{int}]{trig,  }\item[{int}]{echo }\end{DoxyParamCaption})}
+
+
+
+Ultrasonic constructor. 
+
+Saves the pins to communicate with the ultrasonic module. 
+\begin{DoxyParams}{Parameters}
+{\em trig} & an integer. The pin on the arduino that the ultrasonic\textquotesingle{}s trig pin is connected to. \\
+\hline
+{\em echo} & an integer. The pin on the arduino that the ultrasonic\textquotesingle{}s echo pin is connected to. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classultrasonic_aed6e493e6585def02c351e04bab3e496}\label{classultrasonic_aed6e493e6585def02c351e04bab3e496}} 
+\index{ultrasonic@{ultrasonic}!readDistance@{readDistance}}
+\index{readDistance@{readDistance}!ultrasonic@{ultrasonic}}
+\subsubsection{\texorpdfstring{readDistance()}{readDistance()}}
+{\footnotesize\ttfamily float ultrasonic\+::read\+Distance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Function to get distance from the Ultrasonic. 
+
+Activates the ultrasonic, reads the echo time, and processes that time into a distance in centimeters. \begin{DoxyReturn}{Returns}
+float distance to the closest object in centimeters. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/M\+O\+R\+Ebot.\+h\item 
+src/M\+O\+R\+Ebot.\+cpp\end{DoxyCompactItemize}
