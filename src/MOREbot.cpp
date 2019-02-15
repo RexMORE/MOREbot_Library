@@ -217,7 +217,7 @@ void MOREbot::stop(){
 }
 
 float MOREbot::readDistance(){
-  return us.getDistance();
+  return us.readDistance();
 }
 
 void MOREbot::btControl(){
