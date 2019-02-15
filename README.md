@@ -8,4 +8,4 @@
 
 This library provides the functions necessary to program the MOREbot Base Kit.
 
-[DOCUMENTATION](http://htmlpreview.github.io/?https://github.com/RexMORE/MOREbot_Library/blob/master/docs/html/index.html)
+[DOCUMENTATION](https://rexmore.github.io/index)
