@@ -232,8 +232,8 @@ void MOREbot::btControl(){
 		float Lpow = P*(cos(D)-sin(D));
 		float Rpow = P*(-cos(D)-sin(D));
 		
-		_LM.forward(-Lpow);
-		_RM.forward(Rpow);
+		_LM.clockwise(Lpow);
+		_RM.counterClockwise(Rpow);
 	}else{
 		bounce();
 	}
