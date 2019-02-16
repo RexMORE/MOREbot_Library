@@ -49,8 +49,7 @@ class ultrasonic{
   /** Pin number on the arduino that the ultrasonic echo pin is connected to. */
     int _echo;
 
-  public:
-  
+  public:  
   /** Ultrasonic constructor. Saves the pins to communicate with the ultrasonic module.
    *  @param trig an integer. The pin on the arduino that the ultrasonic's trig pin is connected to.
    *  @param echo an integer. The pin on the arduino that the ultrasonic's echo pin is connected to.

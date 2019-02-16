@@ -12,7 +12,7 @@ motor::motor(int MX){
 
 void motor::counterClockwise(int speed){
   if(speed < 0) {
-	  backward(-speed);
+	  clockwise(-speed);
 	  return;
   }
   if(speed > 100) speed = 100;
@@ -23,7 +23,7 @@ void motor::counterClockwise(int speed){
 
 void motor::clockwise(int speed){
   if(speed < 0) {
-	  forward(-speed);
+	  counterClockwise(-speed);
 	  return;
   }
   if(speed > 100) speed = 100;
@@ -166,7 +166,7 @@ String bluetooth::getText(){
 	return text;
 }
 
-MOREbot::MOREbot(int LM, int RM) : _LM(LM), _RM(RM), ble(8, 9) {}
+MOREbot::MOREbot(int LM, int RM) : _LM(LM), _RM(RM), us(-1,-1), ble(8, 9) {}
 
 MOREbot::MOREbot(int LM, int RM, int trig, int echo) : _LM(LM), _RM(RM), us(trig, echo), ble(8, 9) {}
 
@@ -232,8 +232,8 @@ void MOREbot::btControl(){
 		float Lpow = P*(cos(D)-sin(D));
 		float Rpow = P*(-cos(D)-sin(D));
 		
-		_LM.forward(-Lpow);
-		_RM.forward(Rpow);
+		_LM.clockwise(Lpow);
+		_RM.counterClockwise(Rpow);
 	}else{
 		bounce();
 	}
