@@ -260,7 +260,10 @@ class MOREbot{
   /** Operation function for full control from a BLE connection. Handles full control of the robot through the bluetooth module expecting ArduinoBlue joystick values, button id 2 changes to bounce(). */
 	void btControl();
 	
-  /** Operation function for full control to maintain distance to object in front. Handles full control of the robot through the ultrasonic's distance value, if bluetooth is connected, ArduinoBlue button id 2 changes to btControl(). */
-	void bounce();
+  /** Operation function for full control to maintain distance to object in front. Handles full control of the robot through the ultrasonic's distance value, if bluetooth is connected, ArduinoBlue button id 2 changes to btControl(). 
+   *  @param targetDistance a float. Distance the MOREbot attempts to maintain.
+   *  @param threshold a float. The distance from the target that the MOREbot will accept as close enough.
+   */
+	void bounce(float targetDistance, float threshold);
 };
 #endif

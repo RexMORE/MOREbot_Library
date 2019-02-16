@@ -59,7 +59,7 @@ float ultrasonic::readDistance(){
     
     duration = pulseIn(_echo, HIGH);
     
-    distance[i]= duration*0.034/2;
+    distance[i]= duration*0.0343/2;
     delayMicroseconds(5);
   }
   
@@ -224,7 +224,9 @@ float MOREbot::readDistance(){
 
 void MOREbot::btControl(){
 	ble.processData();
+	
 	bool b = ble.getModeButton();
+	
 	if(!b){
 		int P = ble.getSpeed();
 		float D = ble.getDirection();
@@ -234,10 +236,38 @@ void MOREbot::btControl(){
 		
 		_LM.clockwise(Lpow);
 		_RM.counterClockwise(Rpow);
+		
+		delay(50);
 	}else{
-		bounce();
+		bounce(40, 5);
 	}
 }
 
-void MOREbot::bounce(){
+void MOREbot::bounce(float targetDistance, float threshold){
+	ble.processData()
+	;
+	float currentDistance = readDistance();
+	
+	float delta = targetDistance - currentDistance;
+	
+	if(delta < -threshold){
+		delta *= -1;
+		
+		if(delta > 50){
+			stop();
+			return;
+		}
+		
+		forward(1.5*delta);
+		
+	}else if(delta > threshold){
+		
+		if(delta > 30){
+			delta = 30;
+		}
+		
+		backward(2*delta);
+	}else{
+		stop();
+	}
 }
