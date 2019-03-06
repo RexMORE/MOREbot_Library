@@ -22,13 +22,13 @@ class motor{
    */
     motor(int MX); 
 	
-  /** counterClockwise motor function. Sets motor speed and direction (of the internal motor axle), handles negative values with clockwise().
+  /** Counterclockwise motor function. Sets motor speed and direction (of the internal motor axle), handles negative values with clockwise().
    *  @param speed an integer. The speed to be sent to the motor. Contrained from -100 to 100.
    *  @see backward()
    */
     void counterClockwise(int speed);
 	
-  /** Backward motor function. Sets motor speed and direction (of the internal motor axle), handles negative values with counterClockwise().
+  /** Clockwise motor function. Sets motor speed and direction (of the internal motor axle), handles negative values with counterClockwise().
    *  @param speed an integer. The speed to be sent to the motor. Contrained from -100 to 100.
    *  @see forward()
    */
