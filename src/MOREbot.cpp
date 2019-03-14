@@ -39,7 +39,7 @@ void motor::stop(){
 }
 
 ultrasonic::ultrasonic(int trig, int echo){
-	if(rx < 0 || tx < 0) return;
+  if(trig < 0 || echo < 0) return;
   pinMode(trig, OUTPUT);
   pinMode(echo, INPUT);
   _trig = trig;
