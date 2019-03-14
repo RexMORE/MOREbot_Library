@@ -18,9 +18,9 @@ class motor{
   public:
   
   /** Motor constructor. Retrieves the i2c address of the specified motor port on the motor shield.
-   * @param MX integer. The motor port being accessed.
+   * @param motorPort integer. The motor port being accessed.
    */
-    motor(int MX); 
+    motor(int motorPort); 
 	
   /** Counterclockwise motor function. Sets motor speed and direction (of the internal motor axle), handles negative values with clockwise().
    *  @param speed an integer. The speed to be sent to the motor. Contrained from -100 to 100.
