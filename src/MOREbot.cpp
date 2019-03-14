@@ -6,8 +6,9 @@
 Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 
 
-motor::motor(int MX){
-  M = *AFMS.getMotor(MX);
+motor::motor(int motorPort){
+	if(motorPort < 0) return;
+  M = *AFMS.getMotor(motorPort);
 }
 
 void motor::counterClockwise(int speed){
@@ -38,6 +39,7 @@ void motor::stop(){
 }
 
 ultrasonic::ultrasonic(int trig, int echo){
+	if(rx < 0 || tx < 0) return;
   pinMode(trig, OUTPUT);
   pinMode(echo, INPUT);
   _trig = trig;
@@ -67,11 +69,13 @@ float ultrasonic::readDistance(){
 }
 
 bluetooth::bluetooth(int rx, int tx) : ble(rx, tx) {
+	if(rx < 0 || tx < 0) return;
 	ble.begin(9600);
 	delay(100);
 }
 
 bluetooth::bluetooth(String name, int rx, int tx) : ble(rx, tx) {
+	if(rx < 0 || tx < 0) return;
 	if(name.length()>0)
 	  _name = name;
 	ble.begin(9600);
@@ -166,9 +170,9 @@ String bluetooth::getText(){
 	return text;
 }
 
-MOREbot::MOREbot(int LM, int RM) : _LM(LM), _RM(RM), us(-1,-1), ble(8, 9) {}
+MOREbot::MOREbot(int LM, int RM) : _LM(LM), _RM(RM), us(-1,-1), ble(-1,-1) {}
 
-MOREbot::MOREbot(int LM, int RM, int trig, int echo) : _LM(LM), _RM(RM), us(trig, echo), ble(8, 9) {}
+MOREbot::MOREbot(int LM, int RM, int trig, int echo) : _LM(LM), _RM(RM), us(trig, echo), ble(-1,-1) {}
 
 MOREbot::MOREbot(String name, int LM, int RM, int trig, int echo, int rx, int tx) : _name(name), _LM(LM), _RM(RM), us(trig, echo), ble(name, rx, tx) {}
 
