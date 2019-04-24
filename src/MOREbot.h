@@ -13,7 +13,7 @@ class motor{
   private:
   
   /** Motor Object. The pointer object to the motor port on the Adafruit motor shield */
-    Adafruit_DCMotor M;
+    Adafruit_DCMotor _motor;
 	
   public:
   
@@ -116,7 +116,7 @@ class bluetooth{
   /** Checks that the module is responding and attempts to rename it if a name was given during construction. */
 	void setup();
 	
-  /** Reads the BLE stream for any data that the module has recieved. Saves that data in private memory. Processes joystick data into speed and direction. */
+  /** Reads the BLE stream for any data that the module has recieved. Saves that data in private memory. Processes joystick data from radial coordinates into speed and direction. */
 	void processData();
 	
   /** Call function for the current mode status, inverts when the mode button id (2) is recieved. 
@@ -182,6 +182,13 @@ class MOREbot{
    */
     MOREbot(int LM, int RM);
 	
+  /** Two motor MOREbot constructor. Creates left and right motor objects to control the motors. 
+   * @param name a String. The name of the robot.
+   * @param LM an integer. Port of the left motor.
+   * @param RM an integer. Port of the right motor.
+   */
+    MOREbot(String name, int LM, int RM);
+	
   /** Two motor and ultrasonic MOREbot constructor. Creates left and right motor objects to control the motors and an ultrasonic object to sense distance. 
    * @param LM an integer. Port of the left motor.
    * @param RM an integer. Port of the right motor.
@@ -191,7 +198,16 @@ class MOREbot{
     MOREbot(int LM, int RM, int trig, int echo);
 	
   /** Two motor and ultrasonic MOREbot constructor. Creates left and right motor objects to control the motors and an ultrasonic object to sense distance. 
-   * @param name a String. The name that the arduino will attempt to rename the BLE before starting data communication (Does not rename if the module is already connected)
+   * @param name a String. The name of the robot.
+   * @param LM an integer. Port of the left motor.
+   * @param RM an integer. Port of the right motor.
+   * @param trig an integer. The pin on the arduino that the ultrasonic's trig pin is connected to.
+   * @param echo an integer. The pin on the arduino that the ultrasonic's echo pin is connected to.
+   */
+    MOREbot(String name, int LM, int RM, int trig, int echo);
+	
+  /** Two motor and ultrasonic MOREbot constructor. Creates left and right motor objects to control the motors and an ultrasonic object to sense distance. 
+   * @param name a String. The name of the robot.
    * @param LM an integer. Port of the left motor.
    * @param RM an integer. Port of the right motor.
    * @param trig an integer. The pin on the arduino that the ultrasonic's trig pin is connected to.
