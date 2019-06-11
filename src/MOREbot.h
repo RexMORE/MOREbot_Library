@@ -264,6 +264,18 @@ class MOREbot{
    */
     void right(int speed);
 	
+  /**
+   *  Drive the left motor clockwise
+   *  @param speed an integer, constrained between -100 and 100.
+   */
+	void leftMotor(int speed);
+	
+  /**
+   *  Drive the right motor counterClockwise
+   *  @param speed an integer, constrained between -100 and 100.
+   */
+	void rightMotor(int speed);
+	
   /** Drive function for MOREbot to stop. Commands the both motors to stop. */
     void stop();
 	

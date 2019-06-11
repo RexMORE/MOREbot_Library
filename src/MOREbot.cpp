@@ -25,7 +25,8 @@ void motor::counterClockwise(int speed){
 	if(speed > 100) speed = 100;
 
 	//Remap speed from percentage (0-100) to digital (0-255)
-	speed = map(speed, 0, 100, 0, 255);
+	speed = map(speed, 0, 100, 60, 255);
+	if(speed < 65) speed = 0;
 
 	//Send speed and direction to motor
 	_motor.setSpeed(speed);
@@ -43,7 +44,8 @@ void motor::clockwise(int speed){
 	if(speed > 100) speed = 100;
 
 	//Remap speed from percentage (0-100) to digital (0-255)
-	speed = map(speed, 0, 100, 0, 255);
+	speed = map(speed, 0, 100, 60, 255);
+	if(speed < 65) speed = 0;
 
 	//Send speed and direction to motor
 	_motor.setSpeed(speed);
@@ -145,6 +147,13 @@ void bluetooth::processData() {
 	if (ble.available()>0){
 		//Recieve 8 bits of data as a number
 		int i = ble.read();
+		
+		speed = -1;
+		direction = -1;
+		button = -1;
+		slider = -1;
+		sliderValue = -1;
+		text = "";
 		
 		//Check for input code: 251 - Joystick Input
 		if(i == 251){
@@ -327,6 +336,14 @@ void MOREbot::left(int speed){
 void MOREbot::right(int speed){
   _LM.clockwise(speed);
   _RM.clockwise(speed);
+}
+
+void MOREbot::leftMotor(int speed){
+	_LM.clockwise(speed);
+}
+
+void MOREbot::rightMotor(int speed){
+	_RM.counterClockwise(speed);
 }
 
 //Commands the robot to stop by having the both motors stop
