@@ -117,18 +117,23 @@ bluetooth::bluetooth(int rx, int tx) : ble(rx, tx) {
 }
 
 bluetooth::bluetooth(String name, int rx, int tx) : ble(rx, tx) {
+	_rx = rx;
+	_tx = tx;
+	
 	//Check that the pins used exist
 	if(rx < 0 || tx < 0) return;
 
 	//Check that the name is valid, and then save it
 	if(name.length()>0)
-	  _name = name;
+	_name = name;
 
 	//Start UART communication with the bluetooth module at 9600 bits/second
 	ble.begin(9600);
 }
 
 void bluetooth::setup(){
+	if(_rx < 0 || _tx < 0) return;
+	
 	//Start UART communication with the bluetooth module at 9600 bits/second
 	delay(100);
 	
@@ -294,6 +299,18 @@ void MOREbot::setup(){
 	ble.setup();
 }
 
+//Prepares motors and bluetooth and any other components if they are being used
+void MOREbot::setup(int leftPin, int rightPin){
+	AFMS.begin();
+	ble.setup();
+	
+	pinMode(leftPin, INPUT);
+	pinMode(rightPin, INPUT);
+	
+	leftEncoderPort = leftPin;
+	rightEncoderPort = rightPin;
+}
+
 //Returns the motor object of the robot's left motor
 motor MOREbot::getLeftMotor(){
 	return _LM;
@@ -316,26 +333,153 @@ bluetooth MOREbot::getBluetooth(){
 
 //Commands the robot forward by having the left motor move clockwise and right counterClockwise
 void MOREbot::forward(int speed){
-  _LM.clockwise(speed);
-  _RM.counterClockwise(speed);
+	if(speed > 100) speed = 100;
+	speed = map(speed, 0, 100, 0, 80);
+	_LM.clockwise(speed);
+	_RM.counterClockwise(speed);
+}
+
+float i = 0, j = 0;
+
+//Commands the robot forward by having the left motor move clockwise and right counterClockwise
+void MOREbot::forward(int speed, float dist){
+	
+	if(leftEncoderPort > 0 && rightEncoderPort > 0){
+		if(speed > 100) speed = 100;
+		speed = map(speed, 0, 100, 0, 80);
+		
+		_LM.clockwise(speed);
+		_RM.counterClockwise(speed);
+		
+		bool fl1 = false, fl2 = false;
+		
+		while((i*3.1415*2.44)/8.0 < dist || (j*3.1415*2.44)/8.0 < dist){
+			if(digitalRead(leftEncoderPort) && fl1){
+				fl1 = false;
+				i++;
+			}else if(!digitalRead(leftEncoderPort) && !fl1) fl1 = true;
+			
+			if((i*3.1415*2.44)/8 >= dist) _LM.clockwise(0);
+			
+			if(digitalRead(rightEncoderPort) && fl2){
+				fl2 = false;
+				j++;
+			}else if(!digitalRead(rightEncoderPort) && !fl2) fl2 = true;
+			
+			if((j*3.1415*2.44)/8 >= dist) _RM.counterClockwise(0);
+		}
+	}
 }
 
 //Commands the robot backward by having the left motor move counterClockwise and right clockwise
 void MOREbot::backward(int speed){
-  _LM.counterClockwise(speed);
-  _RM.clockwise(speed);
+	if(speed > 100) speed = 100;
+	speed = map(speed, 0, 100, 0, 80);
+	_LM.counterClockwise(speed);
+	_RM.clockwise(speed);
+}
+
+//Commands the robot forward by having the left motor move clockwise and right counterClockwise
+void MOREbot::backward(int speed, float dist){
+	if(leftEncoderPort > 0 && rightEncoderPort > 0){
+		if(speed > 100) speed = 100;
+		speed = map(speed, 0, 100, 0, 80);
+		
+		_LM.counterClockwise(speed);
+		_RM.clockwise(speed);
+		
+		bool fl1 = false, fl2 = false;
+		
+		while((i*3.1415*2.44)/8 < dist || (j*3.1415*2.44)/8 < dist){
+			if(digitalRead(leftEncoderPort) && fl1){
+				fl1 = false;
+				i++;
+			}else if(!digitalRead(leftEncoderPort) && !fl1) fl1 = true;
+			
+			if((i*3.1415*2.44)/8 >= dist) _LM.counterClockwise(0);
+			
+			if(digitalRead(rightEncoderPort) && fl2){
+				fl2 = false;
+				j++;
+			}else if(!digitalRead(rightEncoderPort) && !fl2) fl2 = true;
+			
+			if((j*3.1415*2.44)/8 >= dist) _RM.clockwise(0);
+		}
+	}
 }
 
 //Commands the robot left by having the both motors move counterClockwise
 void MOREbot::left(int speed){
-  _LM.counterClockwise(speed);
-  _RM.counterClockwise(speed);
+	if(speed > 100) speed = 100;
+	speed = map(speed, 0, 100, 0, 80);
+	_LM.counterClockwise(speed);
+	_RM.counterClockwise(speed);
+}
+
+//Commands the robot forward by having the left motor move clockwise and right counterClockwise
+void MOREbot::left(int speed, float deg){
+	if(leftEncoderPort > 0 && rightEncoderPort > 0){
+		if(speed > 100) speed = 100;
+		speed = map(speed, 0, 100, 0, 80);
+		
+		_LM.counterClockwise(speed);
+		_RM.counterClockwise(speed);
+		
+		bool fl1 = false, fl2 = false;
+		
+		while((i*2.44*360)/64 < deg || (i*2.44*360)/64 < deg){
+			if(digitalRead(leftEncoderPort) && fl1){
+				fl1 = false;
+				i++;
+			}else if(!digitalRead(leftEncoderPort) && !fl1) fl1 = true;
+			
+			if((i*2.44*360)/64 >= deg) _LM.counterClockwise(0);
+			
+			if(digitalRead(rightEncoderPort) && fl2){
+				fl2 = false;
+				j++;
+			}else if(!digitalRead(rightEncoderPort) && !fl2) fl2 = true;
+			
+			
+			if((j*2.44*360)/64 >= deg) _RM.counterClockwise(0);
+		}
+	}
 }
 
 //Commands the robot right by having the both motors move clockwise
 void MOREbot::right(int speed){
-  _LM.clockwise(speed);
-  _RM.clockwise(speed);
+	if(speed > 100) speed = 100;
+	speed = map(speed, 0, 100, 0, 80);
+	_LM.clockwise(speed);
+	_RM.clockwise(speed);
+}
+
+void MOREbot::right(int speed, float deg){
+	if(leftEncoderPort > 0 && rightEncoderPort > 0){
+		if(speed > 100) speed = 100;
+		speed = map(speed, 0, 100, 0, 80);
+		
+		_LM.clockwise(speed);
+		_RM.clockwise(speed);
+		
+		bool fl1 = false, fl2 = false;
+		
+		while((i*2.44*360)/64 < deg || (i*2.44*360)/64 < deg){
+			if(digitalRead(leftEncoderPort) && fl1){
+				fl1 = false;
+				i++;
+			}else if(!digitalRead(leftEncoderPort) && !fl1) fl1 = true;
+			
+			if((i*2.44*360)/64 >= deg) _LM.clockwise(0);
+			
+			if(digitalRead(rightEncoderPort) && fl2){
+				fl2 = false;
+				j++;
+			}else if(!digitalRead(rightEncoderPort) && !fl2) fl2 = true;
+			
+			if((j*2.44*360)/64 >= deg) _RM.clockwise(0);
+		}
+	}
 }
 
 void MOREbot::leftMotor(int speed){
@@ -348,8 +492,8 @@ void MOREbot::rightMotor(int speed){
 
 //Commands the robot to stop by having the both motors stop
 void MOREbot::stop(){
-  _LM.stop();
-  _RM.stop();
+	_LM.stop();
+	_RM.stop();
 }
 
 //Retrieves distance data from the robot's ultrasonic
@@ -358,7 +502,7 @@ float MOREbot::readDistance(){
 	float dist = us.readDistance();
 
 	//Remove noisy error regions
-	if(dist < 2 || dist > 150) dist = -1;
+	if(dist < 2 || dist > 180) dist = -1;
 
 	return dist;
 }
