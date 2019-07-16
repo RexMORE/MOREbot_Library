@@ -1,0 +1,48 @@
+Adds MOREbot Library to program
+#include “MOREbot.h”
+
+
+Two motor MOREbot constructor. Creates left and right motor objects to control the motors.
+	MOREbot(int LM, int RM);
+ie: MOREbot robot(1, 2);
+	
+	
+Two motor and ultrasonic MOREbot constructor. Creates left and right motor objects to control the motors and an ultrasonic object to sense distance. 
+	MOREbot(int LM, int RM, int trig, int echo); 
+ie: MOREbot robot(1, 2, A0, A1);
+
+
+Robot setup. Starts the motor shield i2c communication stream.
+	void setup();
+
+
+Drive the left motor clockwise (or counterclockwise with negative speeds) at speed between -100 and 100.
+	void leftMotor(int speed);
+	
+	
+Drive the right motor counterclockwise (or clockwise with negative speeds) at speed between -100 and 100.
+	void rightMotor(int speed);
+
+
+Distance sensing function. Calls ultasonic.readDistance() to get distance to the closest object in centimeters.
+	float readDistance();
+	
+	
+Drive function for MOREbot to drive forward. Commands the left motor clockwise and the right motor counterclockwise at the given speed.
+	void forward(int speed);
+	
+	
+Drive function for MOREbot to drive backward. Commands the left motor counterclockwise and the right motor clockwise at the given speed.
+	void backward(int speed);
+	
+	
+Drive function for MOREbot to drive left. Commands the both motors counterclockwise at the given speed.
+	void left(int speed);
+
+
+Drive function for MOREbot to drive right. Commands the both motors clockwise at the given speed.
+	void right(int speed);
+	
+	
+Drive function for MOREbot to stop. Commands the both motors to stop.
+	void stop();
