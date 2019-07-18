@@ -22,12 +22,11 @@ void setup() {
 void loop() {
   float dist = bot.readDistance();
   
-  bot.forward(50);
-  delay(1000);
-  
-  bot.right(40);
+  bot.leftMotor(-50);
+  bot.rightMotor(40);
   delay(200);
   
-  bot.stop();
+  bot.leftMotor(50);
+  bot.rightMotor(40);
   delay(1000);
 }
