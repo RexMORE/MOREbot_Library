@@ -340,6 +340,7 @@ void MOREbot::forward(int speed){
 }
 
 float i = 0, j = 0;
+float EncRes = 12, WheelDiameter = 2.8;
 
 //Commands the robot forward by having the left motor move clockwise and right counterClockwise
 void MOREbot::forward(int speed, float dist){
@@ -353,20 +354,20 @@ void MOREbot::forward(int speed, float dist){
 		
 		bool fl1 = false, fl2 = false;
 		
-		while((i*3.1415*2.44)/8.0 < dist || (j*3.1415*2.44)/8.0 < dist){
+		while((i*3.1415*WheelDiameter)/EncRes < dist || (j*3.1415*WheelDiameter)/EncRes < dist){
 			if(digitalRead(leftEncoderPort) && fl1){
 				fl1 = false;
 				i++;
 			}else if(!digitalRead(leftEncoderPort) && !fl1) fl1 = true;
 			
-			if((i*3.1415*2.44)/8 >= dist) _LM.clockwise(0);
+			if((i*3.1415*WheelDiameter)/EncRes >= dist) _LM.clockwise(0);
 			
 			if(digitalRead(rightEncoderPort) && fl2){
 				fl2 = false;
 				j++;
 			}else if(!digitalRead(rightEncoderPort) && !fl2) fl2 = true;
 			
-			if((j*3.1415*2.44)/8 >= dist) _RM.counterClockwise(0);
+			if((j*3.1415*WheelDiameter)/EncRes >= dist) _RM.counterClockwise(0);
 		}
 	}
 }
@@ -390,20 +391,20 @@ void MOREbot::backward(int speed, float dist){
 		
 		bool fl1 = false, fl2 = false;
 		
-		while((i*3.1415*2.44)/8 < dist || (j*3.1415*2.44)/8 < dist){
+		while((i*3.1415*WheelDiameter)/EncRes < dist || (j*3.1415*WheelDiameter)/EncRes < dist){
 			if(digitalRead(leftEncoderPort) && fl1){
 				fl1 = false;
 				i++;
 			}else if(!digitalRead(leftEncoderPort) && !fl1) fl1 = true;
 			
-			if((i*3.1415*2.44)/8 >= dist) _LM.counterClockwise(0);
+			if((i*3.1415*WheelDiameter)/EncRes >= dist) _LM.counterClockwise(0);
 			
 			if(digitalRead(rightEncoderPort) && fl2){
 				fl2 = false;
 				j++;
 			}else if(!digitalRead(rightEncoderPort) && !fl2) fl2 = true;
 			
-			if((j*3.1415*2.44)/8 >= dist) _RM.clockwise(0);
+			if((j*3.1415*WheelDiameter)/EncRes >= dist) _RM.clockwise(0);
 		}
 	}
 }
@@ -427,13 +428,13 @@ void MOREbot::left(int speed, float deg){
 		
 		bool fl1 = false, fl2 = false;
 		
-		while((i*2.44*360)/64 < deg || (i*2.44*360)/64 < deg){
+		while((i*WheelDiameter*360)/(8*EncRes) < deg || (i*WheelDiameter*360)/(8*EncRes) < deg){
 			if(digitalRead(leftEncoderPort) && fl1){
 				fl1 = false;
 				i++;
 			}else if(!digitalRead(leftEncoderPort) && !fl1) fl1 = true;
 			
-			if((i*2.44*360)/64 >= deg) _LM.counterClockwise(0);
+			if((i*WheelDiameter*360)/(8*EncRes) >= deg) _LM.counterClockwise(0);
 			
 			if(digitalRead(rightEncoderPort) && fl2){
 				fl2 = false;
@@ -441,7 +442,7 @@ void MOREbot::left(int speed, float deg){
 			}else if(!digitalRead(rightEncoderPort) && !fl2) fl2 = true;
 			
 			
-			if((j*2.44*360)/64 >= deg) _RM.counterClockwise(0);
+			if((j*WheelDiameter*360)/(8*EncRes) >= deg) _RM.counterClockwise(0);
 		}
 	}
 }
@@ -464,20 +465,20 @@ void MOREbot::right(int speed, float deg){
 		
 		bool fl1 = false, fl2 = false;
 		
-		while((i*2.44*360)/64 < deg || (i*2.44*360)/64 < deg){
+		while((i*WheelDiameter*360)/(8*EncRes) < deg || (i*WheelDiameter*360)/(8*EncRes) < deg){
 			if(digitalRead(leftEncoderPort) && fl1){
 				fl1 = false;
 				i++;
 			}else if(!digitalRead(leftEncoderPort) && !fl1) fl1 = true;
 			
-			if((i*2.44*360)/64 >= deg) _LM.clockwise(0);
+			if((i*WheelDiameter*360)/(8*EncRes) >= deg) _LM.clockwise(0);
 			
 			if(digitalRead(rightEncoderPort) && fl2){
 				fl2 = false;
 				j++;
 			}else if(!digitalRead(rightEncoderPort) && !fl2) fl2 = true;
 			
-			if((j*2.44*360)/64 >= deg) _RM.clockwise(0);
+			if((j*WheelDiameter*360)/(8*EncRes) >= deg) _RM.clockwise(0);
 		}
 	}
 }
