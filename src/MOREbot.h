@@ -74,29 +74,16 @@ private:
 	/** Send pin on Arduino. */
 	int _tx;
 	
-	/** Last recieved speed value. */
-	int speed = -1;
+	String _name;
 	
 	/** Last recieved button id. */
-	int button = -1;
+	char button = NULL;
 	
-	/** Last recieved slider id. */
-	int slider = -1;
+	/** Last recieved x value. */
+	int joyX = -1;
 	
-	/** Last recieved slider value. */
-	int sliderValue = -1;
-	
-	/** Last recieved direction value. */
-	float direction = -1;
-	
-	/** Mode button id. */
-	int modeButton = 2;
-	
-	/** Last recieved text String. */
-	String _name = "", text;
-	
-	/** Current mode status. */
-	bool mode = false;
+	/** Last recieved y value. */
+	int joyY = -1;
 	
 	/** UART communication stream with the BLE module. */
 	SoftwareSerial ble;
@@ -118,43 +105,25 @@ public:
 	/** Checks that the module is responding and attempts to rename it if a name was given during construction. */
 	void setup();
 	
+	char readData();
+	
 	/** Reads the BLE stream for any data that the module has recieved. Saves that data in private memory. Processes joystick data from radial coordinates into speed and direction. */
-	void processData();
+	int processData();
 	
-	/** Call function for the current mode status, inverts when the mode button id (2) is recieved. 
-	* @return boolean status of mode on or off.
+	/** Call function for X Coordinate of joystick input. 
+	* @return integer X, between 0 and 100.
 	*/
-	bool getModeButton();
+	int getJoystickX(); 
 	
-	/** Call function for sthe last speed recieved. 
-	* @return integer speed, between 0 and 100.
+	/** Call function for Y Coordinate of joystick input. 
+	* @return integer Y, between 0 and 100.
 	*/
-	int getSpeed(); 
-	
-	/** Call function for the last direction recieved. 
-	* @return float direction, between 0 and 6.28 (<tt>2PI</tt>).
-	*/
-	float getDirection();
+	int getJoystickY();
 	
 	/** Call function for the last button id recieved. 
-	* @return integer button id, expected between 0 and 200.
+	* @return char button id, expected between 'A' and 'K'.
 	*/
-	int getButton();
-	
-	/** Call function for the last slider id recieved. 
-	* @return integer slider id, expected between 0 and 200..
-	*/
-	int getSlider();
-	
-	/** Call function for the last slider value recieved. 
-	* @return integer slider value, expected between 0 and 200.
-	*/
-	int getSliderValue();
-	
-	/** Call function for the last text recieved. 
-	* @return String text.
-	*/
-	String getText();
+	char getButton();
 };
 
 
@@ -320,6 +289,8 @@ public:
 	
 	/** Operation function for full control from a BLE connection. Handles full control of the robot through the bluetooth module expecting ArduinoBlue joystick values, button id 2 changes to bounce(). */
 	void btControl();
+	
+	char btStream();
 	
 	/** Operation function for full control to maintain distance to object in front. Handles full control of the robot through the ultrasonic's distance value, if bluetooth is connected, ArduinoBlue button id 2 changes to btControl(). 
 	*  @param targetDistance a float. Distance the MOREbot attempts to maintain.

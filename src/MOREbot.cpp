@@ -134,147 +134,88 @@ bluetooth::bluetooth(String name, int rx, int tx) : ble(rx, tx) {
 void bluetooth::setup(){
 	if(_rx < 0 || _tx < 0) return;
 	
-	//Start UART communication with the bluetooth module at 9600 bits/second
 	delay(100);
 	
 	//Tell the bluetooth module to rename itself to the name given (default to MOREbot)
-	String s = "AT+NAME" + _name + "\r\n";
+	String s = "AT+NAME " + _name + "\r\n";
 	ble.print(s);
-	delay(10);
+	delay(1100);
 	
 	//Restarts the bluetooth module so that it can connect to other devices
 	ble.print("AT+RESET\r\n");
-	delay(100);
+	delay(1000);
+	ble.setTimeout(10);
 }
 
-void bluetooth::processData() {
-	//Check for data to recieve
+char bluetooth::readData(){
 	if (ble.available()>0){
+		char c = ble.read();
+		//Serial.print("Data in:");
+		//Serial.println(c);
 		//Recieve 8 bits of data as a number
-		int i = ble.read();
-		
-		speed = -1;
-		direction = -1;
-		button = -1;
-		slider = -1;
-		sliderValue = -1;
-		text = "";
-		
-		//Check for input code: 251 - Joystick Input
-		if(i == 251){
-			//Wait for first byte of joystick data (speed byte)
-			while(ble.available()<=0);
-			speed = ble.read();
-			
-			//Wait for second byte of joystick data (direction byte)
-			while(ble.available()<=0);
-			direction = (float)ble.read();
-			
-			//Convert direction from 180 degree range with signed speed direction to radial percentage (-100 - 100)
-			if(speed-49 != 0){
-				//If speed isn't 0, multiply recieved direction by backward/forward direction
-				direction = ((speed-49.0)/abs(speed-49.0))*direction;
-			}else{
-				//If speed is 0 direction is set to 0
-				direction = 0;
-			}
-			
-			//Shift direction to an unsigned digit from 0 - 200
-			direction += 99.0;
-			
-			//Convert from radial percentage (0-200) to true radial (0-2PI)
-			direction = (direction/198.0)*3.1415*2.0;
-
-			//Convert speed from half percentage range with encoded direction (-50 - 50) to unsigned pecentage (0 - 100)
-			speed = map(abs(speed-49), 0, 50, 0, 100);
-			
-			//Wait to recieve end byte
-			while(ble.available()<=0);
-			ble.read();
-		}
-		//Check for input code: 252 - Button Input (With special button input byte (id 2))
-		else if(i == 252){
-			//Read button id (2 - reserve for mode)
-			while(ble.available()<=0);
-			button = ble.read();
-			
-			//Wait for end byte
-			while(ble.available()<=0);
-			ble.read();
-			
-			//If mode button was recieved, toggle mode
-			if(button == modeButton) mode = !mode;
-		}
-		//Check for input code: 253 - Slider Input
-		else if(i == 253){
-			//Read slider id
-			while(ble.available()<=0);
-			slider = ble.read();
-			
-			//Read slider value
-			while(ble.available()<=0);
-			sliderValue = ble.read();
-			
-			//Wait for end byte
-			while(ble.available()<=0);
-			ble.read();
-		}
-		//Check for input code: 254 - String Input
-		else if(i == 254){
-			//Allocate space for a String
-			String t = "";
-			
-			//Read 1 byte of String
-			while(ble.available()<=0);
-			i = ble.read();
-			
-			//If byte is not the end byte, add it to the String
-			while(250 != i){
-				t.concat(char(i));
-				
-				while(ble.available()<=0);
-				i = ble.read();
-			}
-			
-			//Save String
-			text = t;
-		}
+		return c;
 	}
+	return NULL;
 }
 
-//Returns current mode
-bool bluetooth::getModeButton(){
-	return mode;
+int bluetooth::processData() {
+	//Check for data to recieve
+	if (ble.available() > 0){
+		//Serial.print("Data in:");
+		//Recieve 8 bits of data as a number
+		String s = ble.readString();
+		
+		int is = -1, ie = -1;
+		
+		for(int i = 0; i < s.length(); i++){
+			
+			char ic = s.charAt(i);
+			
+			if(ic == 2){ 
+				is = i;
+			}else if(ic == 3){
+				ie = i;
+			}
+
+			if(is > -1 && is < ie && ie > -1){
+
+				String codeword = s.substring(is + 1, ie);
+
+				if(codeword.length() == 6){
+					char c[6];
+
+					for(int j = 0; j < 6; j++){
+						c[j] = codeword.charAt(j);
+					}
+
+					int rawX = (10*(int)(c[1] - '0') + 1*(int)(c[2] - '0'));
+					joyX = c[0] == '0' ? -1*rawX : rawX;
+
+					int rawY = (int)(10*(c[4] - '0') + 1*(c[5] - '0'));
+					joyY = c[3] == '0' ? -1*rawY : rawY;					
+				}else if(codeword.length() == 1){
+					button = codeword.charAt(0);
+				}
+			}
+		}
+		return 1;
+	}
+	return -1;
 }
 
-//Returns last recieved speed
-int bluetooth::getSpeed(){
-	return speed;
+//Returns last recieved X coord
+int bluetooth::getJoystickX(){
+	return joyX;
 }
 
-//Returns last recieved direction
-float bluetooth::getDirection(){
-	return direction;
+//Returns last recieved Y coord
+int bluetooth::getJoystickY(){
+	return joyY;
 }
 
 //Returns last recieved button id
-int bluetooth::getButton(){
+char bluetooth::getButton(){
 	return button;
-}
-
-//Returns last recieved slider id
-int bluetooth::getSlider(){
-	return slider;
-}
-
-//Returns last recieved slider data
-int bluetooth::getSliderValue(){
-	return sliderValue;
-}
-
-//Returns last recieved String
-String bluetooth::getText(){
-	return text;
 }
 
 //Defines robot with only motors
@@ -339,11 +280,9 @@ void MOREbot::forward(int speed){
 	_RM.counterClockwise(speed);
 }
 
-float i = 0, j = 0;
-float EncRes = 12, WheelDiameter = 2.8;
-
 //Commands the robot forward by having the left motor move clockwise and right counterClockwise
 void MOREbot::forward(int speed, float dist){
+	float leftCount = 0, rightCount = 0;
 	
 	if(leftEncoderPort > 0 && rightEncoderPort > 0){
 		if(speed > 100) speed = 100;
@@ -354,20 +293,20 @@ void MOREbot::forward(int speed, float dist){
 		
 		bool fl1 = false, fl2 = false;
 		
-		while((i*3.1415*WheelDiameter)/EncRes < dist || (j*3.1415*WheelDiameter)/EncRes < dist){
+		while((leftCount*3.1415*2.44)/8.0 < dist || (rightCount*3.1415*2.44)/8.0 < dist){
 			if(digitalRead(leftEncoderPort) && fl1){
 				fl1 = false;
-				i++;
+				leftCount++;
 			}else if(!digitalRead(leftEncoderPort) && !fl1) fl1 = true;
 			
-			if((i*3.1415*WheelDiameter)/EncRes >= dist) _LM.clockwise(0);
+			if((leftCount*3.1415*2.44)/8 >= dist) _LM.clockwise(0);
 			
 			if(digitalRead(rightEncoderPort) && fl2){
 				fl2 = false;
-				j++;
+				rightCount++;
 			}else if(!digitalRead(rightEncoderPort) && !fl2) fl2 = true;
 			
-			if((j*3.1415*WheelDiameter)/EncRes >= dist) _RM.counterClockwise(0);
+			if((rightCount*3.1415*2.44)/8 >= dist) _RM.counterClockwise(0);
 		}
 	}
 }
@@ -382,6 +321,8 @@ void MOREbot::backward(int speed){
 
 //Commands the robot forward by having the left motor move clockwise and right counterClockwise
 void MOREbot::backward(int speed, float dist){
+	float leftCount = 0, rightCount = 0;
+	
 	if(leftEncoderPort > 0 && rightEncoderPort > 0){
 		if(speed > 100) speed = 100;
 		speed = map(speed, 0, 100, 0, 80);
@@ -391,20 +332,20 @@ void MOREbot::backward(int speed, float dist){
 		
 		bool fl1 = false, fl2 = false;
 		
-		while((i*3.1415*WheelDiameter)/EncRes < dist || (j*3.1415*WheelDiameter)/EncRes < dist){
+		while((leftCount*3.1415*2.44)/8 < dist || (rightCount*3.1415*2.44)/8 < dist){
 			if(digitalRead(leftEncoderPort) && fl1){
 				fl1 = false;
-				i++;
+				leftCount++;
 			}else if(!digitalRead(leftEncoderPort) && !fl1) fl1 = true;
 			
-			if((i*3.1415*WheelDiameter)/EncRes >= dist) _LM.counterClockwise(0);
+			if((leftCount*3.1415*2.44)/8 >= dist) _LM.counterClockwise(0);
 			
 			if(digitalRead(rightEncoderPort) && fl2){
 				fl2 = false;
-				j++;
+				rightCount++;
 			}else if(!digitalRead(rightEncoderPort) && !fl2) fl2 = true;
 			
-			if((j*3.1415*WheelDiameter)/EncRes >= dist) _RM.clockwise(0);
+			if((rightCount*3.1415*2.44)/8 >= dist) _RM.clockwise(0);
 		}
 	}
 }
@@ -419,6 +360,8 @@ void MOREbot::left(int speed){
 
 //Commands the robot forward by having the left motor move clockwise and right counterClockwise
 void MOREbot::left(int speed, float deg){
+	float leftCount = 0, rightCount = 0;
+	
 	if(leftEncoderPort > 0 && rightEncoderPort > 0){
 		if(speed > 100) speed = 100;
 		speed = map(speed, 0, 100, 0, 80);
@@ -428,21 +371,21 @@ void MOREbot::left(int speed, float deg){
 		
 		bool fl1 = false, fl2 = false;
 		
-		while((i*WheelDiameter*360)/(8*EncRes) < deg || (i*WheelDiameter*360)/(8*EncRes) < deg){
+		while((leftCount*2.44*360)/64 < deg || (rightCount*2.44*360)/64 < deg){
 			if(digitalRead(leftEncoderPort) && fl1){
 				fl1 = false;
-				i++;
+				leftCount++;
 			}else if(!digitalRead(leftEncoderPort) && !fl1) fl1 = true;
 			
-			if((i*WheelDiameter*360)/(8*EncRes) >= deg) _LM.counterClockwise(0);
+			if((leftCount*2.44*360)/64 >= deg) _LM.counterClockwise(0);
 			
 			if(digitalRead(rightEncoderPort) && fl2){
 				fl2 = false;
-				j++;
+				rightCount++;
 			}else if(!digitalRead(rightEncoderPort) && !fl2) fl2 = true;
 			
 			
-			if((j*WheelDiameter*360)/(8*EncRes) >= deg) _RM.counterClockwise(0);
+			if((rightCount*2.44*360)/64 >= deg) _RM.counterClockwise(0);
 		}
 	}
 }
@@ -456,6 +399,8 @@ void MOREbot::right(int speed){
 }
 
 void MOREbot::right(int speed, float deg){
+	float leftCount = 0, rightCount = 0;
+	
 	if(leftEncoderPort > 0 && rightEncoderPort > 0){
 		if(speed > 100) speed = 100;
 		speed = map(speed, 0, 100, 0, 80);
@@ -465,20 +410,20 @@ void MOREbot::right(int speed, float deg){
 		
 		bool fl1 = false, fl2 = false;
 		
-		while((i*WheelDiameter*360)/(8*EncRes) < deg || (i*WheelDiameter*360)/(8*EncRes) < deg){
+		while((leftCount*2.44*360)/64 < deg || (rightCount*2.44*360)/64 < deg){
 			if(digitalRead(leftEncoderPort) && fl1){
 				fl1 = false;
-				i++;
+				leftCount++;
 			}else if(!digitalRead(leftEncoderPort) && !fl1) fl1 = true;
 			
-			if((i*WheelDiameter*360)/(8*EncRes) >= deg) _LM.clockwise(0);
+			if((leftCount*2.44*360)/64 >= deg) _LM.clockwise(0);
 			
 			if(digitalRead(rightEncoderPort) && fl2){
 				fl2 = false;
-				j++;
+				rightCount++;
 			}else if(!digitalRead(rightEncoderPort) && !fl2) fl2 = true;
 			
-			if((j*WheelDiameter*360)/(8*EncRes) >= deg) _RM.clockwise(0);
+			if((rightCount*2.44*360)/64 >= deg) _RM.clockwise(0);
 		}
 	}
 }
@@ -511,36 +456,33 @@ float MOREbot::readDistance(){
 //Basic bluetooth joystick control function
 void MOREbot::btControl(){
 	//Recieve bluetooth data
-	ble.processData();
+	if(ble.processData() == -1) return;
 	
-	//Check for mode (0 - Joytick control, 1 - Bounce)
-	bool b = ble.getModeButton();
-	if(!b){
-		//Retrieve speed and direction from bluetooth
-		int P = ble.getSpeed();
-		float D = ble.getDirection();
-		
-		//Convert radial direction and speed to linear coordinates
-		float Lpow = P*(cos(D)-sin(D));
-		float Rpow = P*(-cos(D)-sin(D));
-		
-		//Send linear speed and direction to robot
-		_LM.clockwise(Lpow);
-		_RM.counterClockwise(Rpow);
-		
-		//Allow robot to rest
-		delay(50);
-	}else{
-		//If bounce mode, use basic bounce function
-		bounce(40, 5);
-	}
+	//Retrieve speed and direction from bluetooth
+	int x = ble.getJoystickX();
+	int y = ble.getJoystickY();
+	
+	//Convert radial direction and speed to linear coordinates
+	float Lpow = (x+y)/2;
+	float Rpow = (x-y)/2;
+	
+	//Send linear speed and direction to robot
+	_LM.clockwise(Lpow);
+	_RM.counterClockwise(Rpow);
+	
+	//Allow robot to rest
+	delay(50);
+}
+
+char MOREbot::btStream(){
+	char c = ble.readData();
+	if(c == NULL) return NULL;
+	return c;
+
 }
 
 //Basic bounce function
 void MOREbot::bounce(float targetDistance, float threshold){
-	//Ensure no data is getting clogged at the bluetooth module
-	ble.processData();
-	
 	//Read distance from ultrasonic
 	float currentDistance = readDistance();
 	
