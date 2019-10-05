@@ -5,8 +5,8 @@
 #define BotName "MOREbot"
 
 //Set which motor ports each motor is plugged into
-#define leftMotor 4 //M4
-#define rightMotor 1 //M1
+#define leftMotor 1 //M1
+#define rightMotor 4 //M4
 
 //Set which pins the Ultrasonic module is plugged into
 #define trig A0
