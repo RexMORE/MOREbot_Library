@@ -11,6 +11,8 @@ void setup() {
   
   delay(1000); //Wait 1 second
 
+  bot.left(60, 135); //Turn 135 degrees left at 60% speed (faster speeds might be inaccurate)
+
   bot.stop(); //Stop robot
 }
 

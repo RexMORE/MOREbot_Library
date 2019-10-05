@@ -12,7 +12,7 @@ void setup() {
 void loop() {
   float distance = bot.readDistance(); //Get distance from ultrasonic module
   
-  if(!(distance < 0)){
+  if(distance > 0){
     if(distance < 30){ //Compare distance to the number 30
       
       bot.leftMotor(50); //Spin left motor clockwise at 50% speed
@@ -23,6 +23,4 @@ void loop() {
       
     }
   }
-
-  
 }

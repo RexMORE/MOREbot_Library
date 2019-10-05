@@ -319,7 +319,7 @@ void MOREbot::backward(int speed){
 	_RM.clockwise(speed);
 }
 
-//Commands the robot forward by having the left motor move clockwise and right counterClockwise
+//Commands the robot backward by having the left motor move clockwise and right counterClockwise
 void MOREbot::backward(int speed, float dist){
 	float leftCount = 0, rightCount = 0;
 	
