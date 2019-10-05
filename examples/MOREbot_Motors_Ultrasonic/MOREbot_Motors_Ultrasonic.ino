@@ -1,7 +1,7 @@
 #include <MOREbot.h>
 
-//Setup robot with motors and ultrasonic
-MOREbot bot(1, 4);
+//Setup robot with motors in ports 1 and 4 and ultrasonic in pins A0 (trig) and A1 (echo)
+MOREbot bot(1, 4, A0, A1);
 
 void setup() {
   

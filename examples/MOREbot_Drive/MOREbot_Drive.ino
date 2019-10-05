@@ -1,6 +1,6 @@
 #include <MOREbot.h>
 
-//Setup robot with motors and ultrasonic
+//Setup robot with motors
 MOREbot bot(1, 4);
 
 void setup() {
