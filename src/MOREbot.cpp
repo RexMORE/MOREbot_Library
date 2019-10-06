@@ -139,11 +139,11 @@ void bluetooth::setup(){
 	//Tell the bluetooth module to rename itself to the name given (default to MOREbot)
 	String s = "AT+NAME " + _name + "\r\n";
 	ble.print(s);
-	delay(1100);
+	delay(100);
 	
 	//Restarts the bluetooth module so that it can connect to other devices
 	ble.print("AT+RESET\r\n");
-	delay(1000);
+	delay(100);
 	ble.setTimeout(10);
 }
 
@@ -160,43 +160,98 @@ char bluetooth::readData(){
 
 int bluetooth::processData() {
 	//Check for data to recieve
-	if (ble.available() > 0){
-		//Serial.print("Data in:");
+	if (ble.available()>0){
 		//Recieve 8 bits of data as a number
-		String s = ble.readString();
+		int i = ble.read();
 		
-		int is = -1, ie = -1;
+		speed = -1;
+		direction = -1;
+		button = -1;
+		slider = -1;
+		sliderValue = -1;
+		text = "";
 		
-		for(int i = 0; i < s.length(); i++){
+		//Check for input code: 251 - Joystick Input
+		if(i == 251){
+			//Wait for first byte of joystick data (speed byte)
+			while(ble.available()<=0);
+			speed = ble.read();
 			
-			char ic = s.charAt(i);
+			//Wait for second byte of joystick data (direction byte)
+			while(ble.available()<=0);
+			direction = (float)ble.read();
 			
-			if(ic == 2){ 
-				is = i;
-			}else if(ic == 3){
-				ie = i;
+			//Convert direction from 180 degree range with signed speed direction to radial percentage (-100 - 100)
+			if(speed-49 != 0){
+				//If speed isn't 0, multiply recieved direction by backward/forward direction
+				direction = ((speed-49.0)/abs(speed-49.0))*direction;
+			}else{
+				//If speed is 0 direction is set to 0
+				direction = 0;
 			}
+			
+			//Shift direction to an unsigned digit from 0 - 200
+			direction += 99.0;
+			
+			//Convert from radial percentage (0-200) to true radial (0-2PI)
+			direction = (direction/198.0)*3.1415*2.0;
 
-			if(is > -1 && is < ie && ie > -1){
-
-				String codeword = s.substring(is + 1, ie);
-
-				if(codeword.length() == 6){
-					char c[6];
-
-					for(int j = 0; j < 6; j++){
-						c[j] = codeword.charAt(j);
-					}
-
-					int rawX = (10*(int)(c[1] - '0') + 1*(int)(c[2] - '0'));
-					joyX = c[0] == '0' ? -1*rawX : rawX;
-
-					int rawY = (int)(10*(c[4] - '0') + 1*(c[5] - '0'));
-					joyY = c[3] == '0' ? -1*rawY : rawY;					
-				}else if(codeword.length() == 1){
-					button = codeword.charAt(0);
-				}
+			//Convert speed from half percentage range with encoded direction (-50 - 50) to unsigned pecentage (0 - 100)
+			speed = map(abs(speed-49), 0, 50, 0, 100);
+			
+			joyX = speed*cos(direction);
+			joyY = speed*sin(direction);
+			
+			//Wait to recieve end byte
+			while(ble.available()<=0);
+			ble.read();
+		}
+		//Check for input code: 252 - Button Input (With special button input byte (id 2))
+		else if(i == 252){
+			//Read button id (2 - reserve for mode)
+			while(ble.available()<=0);
+			button = ble.read();
+			
+			//Wait for end byte
+			while(ble.available()<=0);
+			ble.read();
+			
+			//If mode button was recieved, toggle mode
+			if(button == modeButton) mode = !mode;
+		}
+		//Check for input code: 253 - Slider Input
+		else if(i == 253){
+			//Read slider id
+			while(ble.available()<=0);
+			slider = ble.read();
+			
+			//Read slider value
+			while(ble.available()<=0);
+			sliderValue = ble.read();
+			
+			//Wait for end byte
+			while(ble.available()<=0);
+			ble.read();
+		}
+		//Check for input code: 254 - String Input
+		else if(i == 254){
+			//Allocate space for a String
+			String t = "";
+			
+			//Read 1 byte of String
+			while(ble.available()<=0);
+			i = ble.read();
+			
+			//If byte is not the end byte, add it to the String
+			while(250 != i){
+				t.concat(char(i));
+				
+				while(ble.available()<=0);
+				i = ble.read();
 			}
+			
+			//Save String
+			text = t;
 		}
 		return 1;
 	}
@@ -205,6 +260,7 @@ int bluetooth::processData() {
 
 //Returns last recieved X coord
 int bluetooth::getJoystickX(){
+	
 	return joyX;
 }
 
@@ -463,12 +519,12 @@ void MOREbot::btControl(){
 	int y = ble.getJoystickY();
 	
 	//Convert radial direction and speed to linear coordinates
-	float Lpow = (x+y)/2;
-	float Rpow = (x-y)/2;
+	float Lpow = (x-y)/2;
+	float Rpow = (x+y)/2;
 	
 	//Send linear speed and direction to robot
 	_LM.clockwise(Lpow);
-	_RM.counterClockwise(Rpow);
+	_RM.clockwise(Rpow);
 	
 	//Allow robot to rest
 	delay(50);
