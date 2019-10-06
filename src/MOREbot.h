@@ -74,16 +74,35 @@ private:
 	/** Send pin on Arduino. */
 	int _tx;
 	
-	String _name;
+	/** Last recieved speed value. */
+	int speed = -1;
+	
+	/** Last recieved direction value. */
+	float direction = -1;
+	
+	/** Last recieved X axis value. */
+	float joyX;
+	
+	/** Last recieved Y axis value. */
+	float joyY;
 	
 	/** Last recieved button id. */
-	char button = NULL;
+	int button = -1;
 	
-	/** Last recieved x value. */
-	int joyX = -1;
+	/** Last recieved slider id. */
+	int slider = -1;
 	
-	/** Last recieved y value. */
-	int joyY = -1;
+	/** Last recieved slider value. */
+	int sliderValue = -1;
+	
+	/** Mode button id. */
+	int modeButton = 2;
+	
+	/** Last recieved text String. */
+	String _name = "", text;
+	
+	/** Current mode status. */
+	bool mode = false;
 	
 	/** UART communication stream with the BLE module. */
 	SoftwareSerial ble;
