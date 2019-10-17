@@ -140,9 +140,27 @@ public:
 	int getJoystickY();
 	
 	/** Call function for the last button id recieved. 
-	* @return char button id, expected between 'A' and 'K'.
+	* @return char button id, expected between 0 and 200.
 	*/
-	char getButton();
+	int getButton();
+	
+	/** Call function for the last slider id recieved. 
+	* @return char button id, expected between 0 and 200.
+	*/
+	int getSliderID();
+	
+	/** Call function for the last slider value recieved. 
+	* @return int slider value.
+	*/
+	int getSliderValue();
+	
+	/** Call function for the last String recieved. 
+	* @return String
+	*/
+	String getString();
+
+	/** Clears all stored data	*/
+	void clearData();
 };
 
 
@@ -309,7 +327,45 @@ public:
 	/** Operation function for full control from a BLE connection. Handles full control of the robot through the bluetooth module expecting ArduinoBlue joystick values, button id 2 changes to bounce(). */
 	void btControl();
 	
+	/** Reads a char of data from the bluetooth module
+	 *  @return char data.
+	 */ 
 	char btStream();
+
+	/** Loads a set of instructions from the bluetooth module */
+	void btLoadData();
+
+	/** Reads the Y-Magnitude of the joystick from bluetooth
+	 *  @return int JoyY.
+	 */ 
+	int getJoystickX();
+
+	/** Reads the Y-Magnitude of the joystick from bluetooth
+	 *  @return int JoyX.
+	 */ 
+	int getJoystickY();
+
+	/** Reads the last button id pressed from bluetooth
+	 *  @return int buttonID.
+	 */ 
+	int getButton();
+
+	/** Reads the last slider id pressed from bluetooth
+	 *  @return int sliderID.
+	 */ 
+	int getSliderID();
+
+	/** Reads the last slider value recieved from bluetooth
+	 *  @return int sliderValue.
+	 */ 
+	int getSliderValue();
+
+	/** Reads the last string sent from bluetooth
+	 *  @return String text.
+	 */ 
+	String getString();
+
+	void btClear();
 	
 	/** Operation function for full control to maintain distance to object in front. Handles full control of the robot through the ultrasonic's distance value, if bluetooth is connected, ArduinoBlue button id 2 changes to btControl(). 
 	*  @param targetDistance a float. Distance the MOREbot attempts to maintain.

@@ -270,9 +270,36 @@ int bluetooth::getJoystickY(){
 }
 
 //Returns last recieved button id
-char bluetooth::getButton(){
+int bluetooth::getButton(){
 	return button;
 }
+
+//Returns last recieved button id
+int bluetooth::getSliderID(){
+	return slider;
+}
+
+
+//Returns last recieved button id
+int bluetooth::getSliderValue(){
+	return sliderValue;
+}
+
+
+//Returns last recieved button id
+String bluetooth::getString(){
+	return text;
+}
+
+void bluetooth::clearData(){
+	speed = -1;
+	direction = -1;
+	button = -1;
+	slider = -1;
+	sliderValue = -1;
+	text = "";
+}
+
 
 //Defines robot with only motors
 MOREbot::MOREbot(int LM, int RM) : _LM(LM), _RM(RM), us(-1,-1), ble(-1,-1) {}
@@ -535,6 +562,48 @@ char MOREbot::btStream(){
 	if(c == NULL) return NULL;
 	return c;
 
+}
+
+void MOREbot::btLoadData(){
+	//Recieve bluetooth data
+	if(ble.processData() == -1) return;
+}
+
+//Returns last recieved X coord
+int MOREbot::getJoystickX(){
+	
+	return ble.getJoystickX();
+}
+
+//Returns last recieved Y coord
+int MOREbot::getJoystickY(){
+	return ble.getJoystickY();
+}
+
+//Returns last recieved button id
+int MOREbot::getButton(){
+	return ble.getButton();
+}
+
+//Returns last recieved button id
+int MOREbot::getSliderID(){
+	return ble.getSliderID();
+}
+
+
+//Returns last recieved button id
+int MOREbot::getSliderValue(){
+	return ble.getSliderValue();
+}
+
+
+//Returns last recieved button id
+String MOREbot::getString(){
+	return ble.getString();
+}
+
+void MOREbot::btClear(){
+	ble.clearData();
 }
 
 //Basic bounce function
