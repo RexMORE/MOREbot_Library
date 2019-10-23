@@ -27,5 +27,9 @@ void setup() {
 
 //Function that runs continuously when the robot is on
 void loop() {
+  //Check for and load any messages sent through bluetooth
+  bot.btLoadData();
+
+  //Control the robot with the joystick app
   bot.btControl();
 }

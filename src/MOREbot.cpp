@@ -537,10 +537,7 @@ float MOREbot::readDistance(){
 }
 
 //Basic bluetooth joystick control function
-void MOREbot::btControl(){
-	//Recieve bluetooth data
-	if(ble.processData() == -1) return;
-	
+void MOREbot::btControl(){	
 	//Retrieve speed and direction from bluetooth
 	int x = ble.getJoystickX();
 	int y = ble.getJoystickY();
