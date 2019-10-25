@@ -545,10 +545,11 @@ void MOREbot::btControl(){
 	//Convert radial direction and speed to linear coordinates
 	float Lpow = (x-y)/2;
 	float Rpow = (x+y)/2;
+
 	
 	//Send linear speed and direction to robot
-	_LM.clockwise(Lpow);
-	_RM.clockwise(Rpow);
+	_LM.clockwise(map(Lpow, 0, 100, 0, 75));
+	_RM.clockwise(map(Rpow, 0, 100, 0, 75));
 	
 	//Allow robot to rest
 	delay(50);
