@@ -638,7 +638,8 @@ void MOREbot::bounce(float targetDistance, float threshold){
 		stop();
 	}
 
-	void MOREbot::setMaxSpeed(int newMax){
-		maxSpeed = newMax;
-	}
+}
+
+void MOREbot::setMaxSpeed(int newMax){
+	maxSpeed = newMax;
 }
