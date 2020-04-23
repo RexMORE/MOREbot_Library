@@ -548,8 +548,8 @@ void MOREbot::btControl(){
 
 	
 	//Send linear speed and direction to robot
-	_LM.clockwise(map(Lpow, 0, 100, 0, 75));
-	_RM.clockwise(map(Rpow, 0, 100, 0, 75));
+	_LM.clockwise(map(Lpow, 0, 100, 0, maxSpeed));
+	_RM.clockwise(map(Rpow, 0, 100, 0, maxSpeed));
 	
 	//Allow robot to rest
 	delay(50);
@@ -636,5 +636,9 @@ void MOREbot::bounce(float targetDistance, float threshold){
 	}else{
 		//If the robot is within target range, stop moving
 		stop();
+	}
+
+	void MOREbot::setMaxSpeed(int newMax){
+		maxSpeed = newMax;
 	}
 }

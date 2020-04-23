@@ -182,6 +182,9 @@ private:
 	/** Encoder Port Numbers */
 	int leftEncoderPort;
 	int rightEncoderPort;
+
+	/* Max speed of bluetooth control */
+	int maxSpeed = 75;
 	
 	/** Name of robot, passed to bluetooth. */
 	String _name;
@@ -372,5 +375,10 @@ public:
 	*  @param threshold a float. The distance from the target that the MOREbot will accept as close enough.
 	*/
 	void bounce(float targetDistance, float threshold);
+
+	/** Set max speed of the robot for bluetooth control
+	*  @param newMax an int. Value to set max speed.
+	*/
+	void setMaxSpeed(int newMax);
 };
 #endif
